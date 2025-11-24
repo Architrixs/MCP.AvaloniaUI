@@ -9,9 +9,6 @@
     <PackageReference Include="ModelContextProtocol" />
     <PackageReference Include="ModelContextProtocol.Core" />
     
-    <!-- JSON handling -->
-    <PackageReference Include="System.Text.Json" />
-    
     <!-- HTTP client for web requests -->
     <PackageReference Include="Microsoft.Extensions.Http" />
     
@@ -20,7 +17,6 @@
     <PackageReference Include="Microsoft.Extensions.Logging.Console" />
     
     <!-- Telemetry and Observability -->
-    <PackageReference Include="System.Diagnostics.DiagnosticSource" />
     <PackageReference Include="OpenTelemetry" />
     <PackageReference Include="OpenTelemetry.Extensions.Hosting" />
     <PackageReference Include="OpenTelemetry.Exporter.Console" />
@@ -32,9 +28,6 @@
     <!-- Configuration -->
     <PackageReference Include="Microsoft.Extensions.Configuration" />
     <PackageReference Include="Microsoft.Extensions.Configuration.Json" />
-    
-    <!-- XML/XAML processing -->
-    <PackageReference Include="System.Xml.XDocument" />
     
     <!-- Sentry Error Tracking -->
     <PackageReference Include="Sentry" />
