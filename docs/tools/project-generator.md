@@ -24,7 +24,7 @@ The ProjectGeneratorTool creates production-ready AvaloniaUI projects with vario
 
 This creates a basic project with:
 - Standard project structure
-- Modern .NET 9.0 targeting
+- Modern .NET 10.0 targeting
 - Essential AvaloniaUI packages
 - Basic window and app setup
 

@@ -2,7 +2,7 @@
 
 [![Build Status](https://github.com/decriptor/AvaloniaUI.MCP/workflows/CI/badge.svg)](https://github.com/decriptor/AvaloniaUI.MCP/actions)
 [![Test Coverage](https://img.shields.io/badge/coverage-90%25-brightgreen)](https://github.com/decriptor/AvaloniaUI.MCP)
-[![.NET 9.0](https://img.shields.io/badge/.NET-9.0-blue)](https://dotnet.microsoft.com/download/dotnet/9.0)
+[![.NET 10.0](https://img.shields.io/badge/.NET-10.0-blue)](https://dotnet.microsoft.com/download/dotnet/10.0)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![Documentation](https://img.shields.io/badge/docs-GitHub%20Pages-blue)](https://decriptor.github.io/AvaloniaUI.MCP)
 
@@ -46,7 +46,7 @@ A comprehensive MCP server providing enterprise-grade tools, resources, and guid
 
 ### Prerequisites
 
-- **.NET 9.0 SDK** or later
+- **.NET 10.0 SDK** or later
 - **MCP-compatible client** (Claude Desktop, VS Code with MCP extension)
 
 ### Installation
@@ -140,7 +140,7 @@ Try these commands with your MCP client:
 
 Built with:
 
-- **.NET 9.0** - Latest runtime with performance optimizations
+- **.NET 10.0** - Latest runtime with performance optimizations
 - **MCP Protocol** - Official Microsoft Model Context Protocol SDK
 - **OpenTelemetry** - Enterprise observability and monitoring
 - **Reactive Extensions** - Async/reactive programming patterns

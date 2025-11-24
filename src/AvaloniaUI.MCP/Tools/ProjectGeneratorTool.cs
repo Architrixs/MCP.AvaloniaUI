@@ -196,9 +196,9 @@ public static class ProjectGeneratorTool
     {
         string targetFramework = platforms switch
         {
-            "mobile" => "net9.0",
-            "all" => "net9.0",
-            _ => "net9.0"
+            "mobile" => "net10.0",
+            "all" => "net10.0",
+            _ => "net10.0"
         };
 
         var packageReferences = new List<string>

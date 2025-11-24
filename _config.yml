@@ -65,7 +65,7 @@ sass:
 # Custom variables
 custom:
   version: "1.0.0"
-  dotnet_version: "9.0"
+  dotnet_version: "10.0"
   mcp_version: "0.3.0"
 
 # Exclude from processing

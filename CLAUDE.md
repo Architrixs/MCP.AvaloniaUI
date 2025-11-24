@@ -4,12 +4,12 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Project Overview
 
-This is an AvaloniaUI.MCP project - a comprehensive Model Context Protocol (MCP) server that provides extensive AvaloniaUI knowledge and development assistance. The server is built on .NET 9.0 and implements the official Microsoft MCP SDK to deliver tools, resources, and prompts for AvaloniaUI development.
+This is an AvaloniaUI.MCP project - a comprehensive Model Context Protocol (MCP) server that provides extensive AvaloniaUI knowledge and development assistance. The server is built on .NET 10.0 and implements the official Microsoft MCP SDK to deliver tools, resources, and prompts for AvaloniaUI development.
 
 ## Development Environment
 
-- **Target Framework**: .NET 9.0 (net9.0)
-- **Required SDK**: 9.0.300 (specified in global.json)
+- **Target Framework**: .NET 10.0 (net10.0)
+- **Required SDK**: 10.0.100 (specified in global.json)
 - **Language Features**: C# with ImplicitUsings and Nullable reference types enabled
 - **Package Management**: Central Package Management is enabled (ManagePackageVersionsCentrally=true)
 - **MCP SDK**: ModelContextProtocol 0.3.0-preview.1 for server implementation
@@ -107,7 +107,7 @@ The server implements STDIO transport and can be used with any MCP-compatible cl
 
 ## Important Notes
 
-- The project uses .NET 9.0 with SDK version 9.0.300
+- The project uses .NET 10.0 with SDK version 10.0.100
 - The solution file uses the newer .slnx format instead of traditional .sln
 - The project structure follows modern .NET conventions with Directory.Build.* files for shared configuration
 - MCP server provides comprehensive AvaloniaUI development assistance through tools, resources, and prompts

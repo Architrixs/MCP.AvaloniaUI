@@ -6,7 +6,7 @@ Get up and running with AvaloniaUI.MCP in minutes.
 
 Before you begin, ensure you have:
 
-- **.NET 9.0 SDK** or later
+- **.NET 10.0 SDK** or later
 - **MCP-compatible client** such as:
   - Claude Desktop
   - VS Code with MCP extension

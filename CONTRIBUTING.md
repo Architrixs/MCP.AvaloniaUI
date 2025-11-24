@@ -34,7 +34,7 @@ Thank you for your interest in contributing to the AvaloniaUI MCP Server! This d
 
 ### Prerequisites
 
-- **.NET 9.0 SDK** (version 9.0.300 or later)
+- **.NET 10.0 SDK** (version 10.0.100 or later)
 - **Git** for version control
 - **IDE** (Visual Studio, VS Code, or JetBrains Rider)
 

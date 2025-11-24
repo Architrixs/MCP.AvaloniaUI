@@ -1,5 +1,5 @@
 # Build stage
-FROM mcr.microsoft.com/dotnet/sdk:9.0 AS build
+FROM mcr.microsoft.com/dotnet/sdk:10.0 AS build
 WORKDIR /src
 
 # Copy project files first for better layer caching
@@ -30,7 +30,7 @@ RUN dotnet publish src/AvaloniaUI.MCP/AvaloniaUI.MCP.csproj \
     -p:PublishTrimmed=false
 
 # Runtime stage - Use Ubuntu Chiseled for minimal size (~30MB vs ~180MB)
-FROM mcr.microsoft.com/dotnet/runtime:9.0-noble-chiseled AS runtime
+FROM mcr.microsoft.com/dotnet/runtime:10.0-noble-chiseled AS runtime
 WORKDIR /app
 
 # Copy published app (chiseled images already have non-root user)

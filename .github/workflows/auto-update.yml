@@ -109,14 +109,14 @@ jobs:
         CURRENT_VERSION=$(cat global.json | grep -o '"version": "[^"]*"' | cut -d'"' -f4)
         echo "Current .NET version: $CURRENT_VERSION"
 
-        # Get latest .NET 9.0 version
+        # Get latest .NET 10.0 version
         LATEST_VERSION=$(curl -s https://api.nuget.org/v3-flatcontainer/microsoft.netcore.app/index.json | \
-          grep -o '"9\.[0-9]\+\.[0-9]\+"' | \
+          grep -o '"10\.[0-9]\+\.[0-9]\+"' | \
           sort -V | \
           tail -1 | \
           tr -d '"')
 
-        echo "Latest .NET 9.0 version: $LATEST_VERSION"
+        echo "Latest .NET 10.0 version: $LATEST_VERSION"
 
         if [ "$CURRENT_VERSION" != "$LATEST_VERSION" ]; then
           echo "has-update=true" >> $GITHUB_OUTPUT

@@ -14,7 +14,7 @@ Welcome to the AvaloniaUI.MCP server documentation. This comprehensive Model Con
 
 ## 🎯 Overview
 
-AvaloniaUI.MCP is a professional-grade MCP server built on .NET 9.0 that provides:
+AvaloniaUI.MCP is a professional-grade MCP server built on .NET 10.0 that provides:
 
 - **15+ Development Tools** for project generation, validation, and code assistance
 - **Comprehensive Knowledge Base** with 500+ controls, patterns, and examples
@@ -26,7 +26,7 @@ AvaloniaUI.MCP is a professional-grade MCP server built on .NET 9.0 that provide
 
 ### Prerequisites
 
-- .NET 9.0 SDK
+- .NET 10.0 SDK
 - MCP-compatible client (Claude Desktop, VS Code with MCP extension)
 
 ### Installation

@@ -16,7 +16,7 @@ Error: The server failed to start or connection refused
 **Check .NET Version**
 ```bash
 dotnet --version
-# Should show 9.0.x or later
+# Should show 10.0.x or later
 ```
 
 **Verify Project Build**
@@ -108,7 +108,7 @@ echo '{"jsonrpc":"2.0","id":1,"method":"tools/list","params":{}}' | dotnet run -
 **Check Permissions**
 ```bash
 # Ensure executable permissions
-chmod +x src/AvaloniaUI.MCP/bin/Debug/net9.0/AvaloniaUI.MCP
+chmod +x src/AvaloniaUI.MCP/bin/Debug/net10.0/AvaloniaUI.MCP
 
 # Check file access
 ls -la src/AvaloniaUI.MCP/AvaloniaUI.MCP.csproj
@@ -283,7 +283,7 @@ dotnet list package --vulnerable
 **Verify SDK Version**
 ```bash
 dotnet --list-sdks
-# Should include 9.0.x
+# Should include 10.0.x
 ```
 
 ### Test Failures
@@ -421,7 +421,7 @@ When reporting issues, include:
 
 **Environment:**
 - OS: Ubuntu 22.04 / Windows 11 / macOS 13
-- .NET Version: 9.0.x
+- .NET Version: 10.0.x
 - Server Version: 1.0.0
 
 **Issue:**
