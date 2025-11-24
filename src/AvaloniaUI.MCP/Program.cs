@@ -14,7 +14,10 @@ sealed class Program
 
         // Configure logging with structured logging
         builder.Logging.ClearProviders();
-        builder.Logging.AddConsole();
+        builder.Logging.AddConsole(o =>
+        {
+            o.LogToStandardErrorThreshold = LogLevel.Trace;
+        });
 
         // Add Sentry logging with configuration
         builder.Logging.AddSentry(o =>
