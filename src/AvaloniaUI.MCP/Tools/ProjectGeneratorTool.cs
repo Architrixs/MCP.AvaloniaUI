@@ -9,6 +9,7 @@ namespace AvaloniaUI.MCP.Tools;
 [McpServerToolType]
 public static class ProjectGeneratorTool
 {
+    const string AvaloniaVersion = "11.3.12";
     static readonly string[] ToolOperation = ["desktop", "mobile", "all"];
 
     [McpServerTool, Description("Creates a new AvaloniaUI project with the specified template and configuration")]
@@ -203,20 +204,20 @@ public static class ProjectGeneratorTool
 
         var packageReferences = new List<string>
         {
-            "    <PackageReference Include=\"Avalonia\" Version=\"11.3.2\" />",
-            "    <PackageReference Include=\"Avalonia.Desktop\" Version=\"11.3.2\" />",
-            "    <PackageReference Include=\"Avalonia.Fonts.Inter\" Version=\"11.3.2\" />"
+            $"    <PackageReference Include=\"Avalonia\" Version=\"{AvaloniaVersion}\" />",
+            $"    <PackageReference Include=\"Avalonia.Desktop\" Version=\"{AvaloniaVersion}\" />",
+            $"    <PackageReference Include=\"Avalonia.Fonts.Inter\" Version=\"{AvaloniaVersion}\" />"
         };
 
         if (platforms is "mobile" or "all")
         {
-            packageReferences.Add("    <PackageReference Include=\"Avalonia.Android\" Version=\"11.3.2\" />");
-            packageReferences.Add("    <PackageReference Include=\"Avalonia.iOS\" Version=\"11.3.2\" />");
+            packageReferences.Add($"    <PackageReference Include=\"Avalonia.Android\" Version=\"{AvaloniaVersion}\" />");
+            packageReferences.Add($"    <PackageReference Include=\"Avalonia.iOS\" Version=\"{AvaloniaVersion}\" />");
         }
 
         if (includeMvvm)
         {
-            packageReferences.Add("    <PackageReference Include=\"Avalonia.ReactiveUI\" Version=\"11.3.2\" />");
+            packageReferences.Add($"    <PackageReference Include=\"Avalonia.ReactiveUI\" Version=\"{AvaloniaVersion}\" />");
         }
 
         return $@"<Project Sdk=""Microsoft.NET.Sdk"">
