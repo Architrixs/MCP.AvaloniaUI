@@ -1,5 +1,7 @@
 ﻿using System.ComponentModel;
 
+using AvaloniaUI.MCP.Settings;
+
 using ModelContextProtocol.Server;
 
 namespace AvaloniaUI.MCP.Tools;
@@ -745,7 +747,7 @@ public class {config.ClassName}Tests
         var packages = new List<string>
         {
             GetTestFrameworkPackage(config.Framework),
-            "<PackageReference Include=\"Avalonia.Headless\" Version=\"11.3.2\" />"
+            $"<PackageReference Include=\"Avalonia.Headless\" Version=\"{McpSettings.AvaloniaVersion}\" />"
         };
 
         if (config.IncludeMocks)

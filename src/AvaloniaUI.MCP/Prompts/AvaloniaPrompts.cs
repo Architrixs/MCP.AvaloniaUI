@@ -1,5 +1,7 @@
 ﻿using System.ComponentModel;
 
+using AvaloniaUI.MCP.Settings;
+
 using ModelContextProtocol.Server;
 
 namespace AvaloniaUI.MCP.Prompts;
@@ -43,7 +45,7 @@ Create the following project structure:
 ```
 
 ### 2. Required NuGet Packages
-- Avalonia (11.3.2 - latest stable)
+- Avalonia ({McpSettings.AvaloniaVersion} - latest stable)
 - Avalonia.Desktop (for desktop support)
 - Avalonia.ReactiveUI (for MVVM support)
 - Avalonia.Fonts.Inter (for modern typography)
