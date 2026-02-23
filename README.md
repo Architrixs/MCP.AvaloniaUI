@@ -47,7 +47,7 @@ A comprehensive MCP server providing enterprise-grade tools, resources, and guid
 ### Prerequisites
 
 - **.NET 10.0 SDK** or later
-- **MCP-compatible client** (Claude Desktop, VS Code with MCP extension)
+- **MCP-compatible client** (Claude Desktop, Codex Desktop/CLI, VS Code with MCP extension)
 
 ### Installation
 
@@ -85,6 +85,18 @@ Add to your MCP client configuration:
   }
 }
 ```
+
+For Codex Desktop/CLI, you can add the server with:
+
+```bash
+# Linux/macOS
+codex mcp add avalonia -- sh -lc 'cd /path/to/AvaloniaUI.MCP && dotnet run --project src/AvaloniaUI.MCP/AvaloniaUI.MCP.csproj'
+
+# Windows (PowerShell)
+codex mcp add avalonia -- powershell -NoProfile -Command "Set-Location 'C:\\path\\to\\AvaloniaUI.MCP'; dotnet run --project src/AvaloniaUI.MCP/AvaloniaUI.MCP.csproj"
+```
+
+If your default SDK is .NET 8, install .NET 10 and run from the repository root so `global.json` (`10.0.100`) is applied.
 
 ### First Commands
 

@@ -9,6 +9,8 @@ Before you begin, ensure you have:
 - **.NET 10.0 SDK** or later
 - **MCP-compatible client** such as:
   - Claude Desktop
+  - Codex Desktop
+  - Codex CLI
   - VS Code with MCP extension
   - Custom MCP client
 
@@ -54,6 +56,57 @@ Add the following to your Claude Desktop MCP configuration:
   }
 }
 ```
+
+### Codex CLI
+
+Add AvaloniaUI.MCP to Codex:
+
+```bash
+# Linux/macOS
+codex mcp add avalonia -- sh -lc 'cd /path/to/AvaloniaUI.MCP && dotnet run --project src/AvaloniaUI.MCP/AvaloniaUI.MCP.csproj'
+
+# Windows (PowerShell)
+codex mcp add avalonia -- powershell -NoProfile -Command "Set-Location 'C:\\path\\to\\AvaloniaUI.MCP'; dotnet run --project src/AvaloniaUI.MCP/AvaloniaUI.MCP.csproj"
+```
+
+Verify it is configured:
+
+```bash
+codex mcp list
+codex mcp get avalonia
+```
+
+### Codex Desktop
+
+Codex Desktop uses the same MCP configuration as Codex CLI.
+
+Option 1 (recommended): add it with CLI:
+
+```bash
+# Linux/macOS
+codex mcp add avalonia -- sh -lc 'cd /path/to/AvaloniaUI.MCP && dotnet run --project src/AvaloniaUI.MCP/AvaloniaUI.MCP.csproj'
+
+# Windows (PowerShell)
+codex mcp add avalonia -- powershell -NoProfile -Command "Set-Location 'C:\\path\\to\\AvaloniaUI.MCP'; dotnet run --project src/AvaloniaUI.MCP/AvaloniaUI.MCP.csproj"
+```
+
+Option 2: manually edit `~/.codex/config.toml`:
+
+```toml
+[mcp_servers.avalonia]
+command = "dotnet"
+args = ["run", "--project", "src/AvaloniaUI.MCP/AvaloniaUI.MCP.csproj"]
+cwd = "/path/to/AvaloniaUI.MCP"
+enabled = true
+```
+
+On Windows, use a Windows path for `cwd`, for example:
+
+```toml
+cwd = "C:\\path\\to\\AvaloniaUI.MCP"
+```
+
+Restart Codex Desktop after updating the config.
 
 ### VS Code
 
@@ -142,6 +195,22 @@ export DOTNET_gcConcurrent=1
 ## Troubleshooting
 
 ### Common Issues
+
+#### Default SDK Is .NET 8.0
+
+This repository requires SDK 10 and includes `global.json` pinned to `10.0.100`.
+
+```bash
+# Check installed SDKs
+dotnet --list-sdks
+
+# Run from repository root so global.json is applied
+cd /path/to/AvaloniaUI.MCP
+dotnet --version  # should print 10.0.x
+dotnet run --project src/AvaloniaUI.MCP/AvaloniaUI.MCP.csproj
+```
+
+If `dotnet --version` still shows `8.0.x`, install .NET 10 SDK, then reopen your terminal.
 
 #### Server Not Starting
 ```bash

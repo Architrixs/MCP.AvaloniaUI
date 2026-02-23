@@ -13,6 +13,21 @@ Error: The server failed to start or connection refused
 
 #### Solutions
 
+**Default SDK Is .NET 8.0**
+```bash
+# Check installed SDKs
+dotnet --list-sdks
+
+# This repository pins SDK 10.0.100 in global.json
+cd /path/to/AvaloniaUI.MCP
+dotnet --version  # should show 10.0.x
+
+# Run from repo root so global.json is applied
+dotnet run --project src/AvaloniaUI.MCP/AvaloniaUI.MCP.csproj
+```
+
+If `dotnet --version` still shows `8.0.x`, install the .NET 10 SDK and restart your terminal.
+
 **Check .NET Version**
 ```bash
 dotnet --version
