@@ -93,6 +93,26 @@ public class ToolsTests
     }
 
     [TestMethod]
+    public void XamlValidationTool_ValidateXaml_DoesNotFlagDockPanelAsUnsupported()
+    {
+        // Arrange
+        string validXaml = @"<Window xmlns=""https://github.com/avaloniaui""
+                                 xmlns:x=""http://schemas.microsoft.com/winfx/2006/xaml"">
+                             <DockPanel>
+                                <TextBlock Text=""Header"" DockPanel.Dock=""Top"" />
+                                <TextBlock Text=""Body"" />
+                             </DockPanel>
+                          </Window>";
+
+        // Act
+        string result = XamlValidationTool.ValidateXaml(validXaml);
+
+        // Assert
+        Assert.IsFalse(result.Contains("DockPanel is not available in AvaloniaUI", StringComparison.Ordinal),
+            "DockPanel should not be reported as unsupported.");
+    }
+
+    [TestMethod]
     public void XamlValidationTool_ConvertWpfXamlToAvalonia_RejectsEmptyContent()
     {
         // Arrange

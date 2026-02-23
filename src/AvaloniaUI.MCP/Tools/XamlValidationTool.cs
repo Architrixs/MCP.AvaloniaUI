@@ -191,7 +191,7 @@ public static class XamlValidationTool
     static void ValidateAvaloniaSpecificIssues(XDocument doc, List<string> validationResult, string validationLevel, ref bool hasErrors)
     {
         // Check for unsupported WPF elements
-        string[] wpfOnlyElements = ["DockPanel", "UniformGrid", "Viewbox"];
+        string[] wpfOnlyElements = ["UniformGrid", "Viewbox"];
         foreach (string? element in wpfOnlyElements)
         {
             if (doc.Descendants().Any(e => e.Name.LocalName == element))
