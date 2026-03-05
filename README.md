@@ -39,7 +39,7 @@ This means when you ask Claude _"Create an MVVM project called MyApp"_, Claude c
 | Capability | Description |
 |------------|-------------|
 | **Tools** | Executable actions – project generation, XAML validation, code conversion |
-| **Resources** | Queryable knowledge – controls catalog, XAML patterns, migration guide |
+| **Resources** | Queryable knowledge – controls catalog, XAML patterns, migration guide, community resources |
 | **Prompts** | Pre-built prompt templates for common AvaloniaUI tasks |
 
 For the full specification see the [official MCP docs](https://modelcontextprotocol.io/introduction).
@@ -70,6 +70,7 @@ For the full specification see the [official MCP docs](https://modelcontextproto
 │                   │ controls     │                            │
 │                   │ xaml-patterns│                            │
 │                   │ migration    │                            │
+│                   │ community    │                            │
 │                   └──────────────┘                            │
 └──────────────────────────────────────────────────────────────┘
 ```
@@ -82,7 +83,7 @@ For the full specification see the [official MCP docs](https://modelcontextproto
 | **Tools** | `src/AvaloniaUI.MCP/Tools/` | 18 `[McpServerTool]` methods callable by AI |
 | **Resources** | `src/AvaloniaUI.MCP/Resources/` | Read-only knowledge providers |
 | **Prompts** | `src/AvaloniaUI.MCP/Prompts/` | Reusable prompt template generators |
-| **Knowledge base** | `src/AvaloniaUI.MCP/Data/` | JSON files with controls, patterns, migration data |
+| **Knowledge base** | `src/AvaloniaUI.MCP/Data/` | JSON files: `controls.json` (49 controls), `xaml-patterns.json` (20 patterns), `migration-guide.json`, `community-resources.json` |
 | **Services** | `src/AvaloniaUI.MCP/Services/` | Caching (`ResourceCacheService`) and telemetry |
 
 ### Request Lifecycle
@@ -108,10 +109,10 @@ For the full specification see the [official MCP docs](https://modelcontextproto
 
 ### 📚 Built-in Knowledge Base
 
-- **Controls catalog** – descriptions, properties, and XAML examples for all major AvaloniaUI controls
-- **XAML patterns** – reusable layout, binding, and animation patterns
-- **WPF migration guide** – control mappings, namespace changes, binding differences
-- **Design patterns** – MVVM, ReactiveUI, dependency injection guidance
+- **Controls catalog** (`controls.json`) – 49 controls with descriptions, key properties, and XAML examples covering layout, input, display, selection, container, navigation, date/time, and advanced controls
+- **XAML patterns** (`xaml-patterns.json`) – 20 reusable patterns including layout, binding, animation, drag-drop, file picker, clipboard, localization, splash screen, native OS menus, and custom controls; sourced from [AvaloniaUI.QuickGuides](https://github.com/AvaloniaUI/AvaloniaUI.QuickGuides)
+- **WPF migration guide** (`migration-guide.json`) – control mappings, namespace changes, binding differences, and step-by-step migration process
+- **Community resources** (`community-resources.json`) – curated MVVM frameworks, UI themes, chart libraries, control extensions, and notable open-source apps; sourced from [awesome-avalonia](https://github.com/AvaloniaCommunity/awesome-avalonia)
 
 ### ⚡ Infrastructure
 
@@ -278,24 +279,30 @@ The following are features we intend to add. Contributions in any of these areas
 
 ### Short-term (next release)
 
-- [ ] **Missing controls in knowledge base** – ButtonSpinner, ColorPicker, GridSplitter, ItemsRepeater, MaskedTextBox, PathIcon, RelativePanel, RepeatButton, SelectableTextBlock, SplitButton, ToggleButton, ToggleSplitButton, UniformGrid (see [`docs/todo/control-coverage.md`](docs/todo/control-coverage.md))
-- [ ] **XAML validator accuracy fixes** – remove false "unsupported" warnings for `UniformGrid` and `Viewbox` (see [`docs/todo/xaml-validator-fixes.md`](docs/todo/xaml-validator-fixes.md))
+- [x] **Missing controls in knowledge base** – ButtonSpinner, ColorPicker, GridSplitter, ItemsControl, ItemsRepeater, MaskedTextBox, Panel, PathIcon, RelativePanel, RepeatButton, SelectableTextBlock, SplitButton, ToggleButton, ToggleSplitButton, UniformGrid – **✅ Added** (see [`docs/todo/control-coverage.md`](docs/todo/control-coverage.md))
+- [x] **QuickGuides patterns** – bindings/converters, drag-drop, file picker, clipboard, localization, splash screen, native menu, custom control, ItemsRepeater list – **✅ Added** (from [AvaloniaUI.QuickGuides](https://github.com/AvaloniaUI/AvaloniaUI.QuickGuides))
+- [x] **Community resources knowledge base** – MVVM frameworks, UI themes, chart libraries, control extensions, notable apps – **✅ Added** (from [awesome-avalonia](https://github.com/AvaloniaCommunity/awesome-avalonia))
+- [ ] **XAML validator accuracy fixes** – remove false "unsupported" warnings for `Viewbox` (see [`docs/todo/xaml-validator-fixes.md`](docs/todo/xaml-validator-fixes.md))
 - [ ] **DockPanel generation fix** – emit idiomatic `DockPanel.Dock` child layout instead of `Content=` usage (see [`docs/todo/control-generation-fixes.md`](docs/todo/control-generation-fixes.md))
 - [ ] **ScrollViewer property correction** – verify and fix `ZoomMode` property in controls data
 
 ### Medium-term
 
 - [ ] **HTTP/SSE transport** – allow clients to connect over HTTP in addition to STDIO
-- [ ] **AvaloniaUI 12.x parity** – keep the knowledge base in sync with the latest Avalonia release
+- [ ] **AvaloniaUI 12.x parity** – keep the knowledge base in sync with the latest Avalonia release from [docs.avaloniaui.net](https://docs.avaloniaui.net/)
 - [ ] **Interactive XAML preview suggestions** – detect common layout mistakes and propose fixes
 - [ ] **Custom control template scaffolding** – generate boilerplate for `TemplatedControl` subclasses
 - [ ] **More comprehensive migration automation** – deeper WPF property mapping and code-behind conversion hints
+- [ ] **ReactiveUI patterns** – deeper reactive programming examples (from ReactiveUI docs and community samples)
+- [ ] **Native AOT publishing guide** – based on [AvaloniaUI.QuickGuides/NativeAot](https://github.com/AvaloniaUI/AvaloniaUI.QuickGuides/tree/main/NativeAot)
 
 ### Long-term
 
 - [ ] **AvaloniaUI designer integration** – surface MCP tools directly inside the visual designer
 - [ ] **Project analysis tool** – analyse an existing project and suggest improvements
 - [ ] **Automated upgrade tool** – migrate an AvaloniaUI 0.x project to 11/12
+- [ ] **Mobile/Android/iOS deployment guide** – cross-platform deployment patterns
+- [ ] **WASM/Browser target guide** – AvaloniaUI WebAssembly knowledge
 
 ## ⚠️ Known Issues
 
@@ -303,10 +310,9 @@ These are active issues. Pull requests fixing them are especially appreciated.
 
 | # | Area | Description | Tracking |
 |---|------|-------------|----------|
-| 1 | Knowledge base | Several Avalonia controls are missing from `controls.json` | [`docs/todo/control-coverage.md`](docs/todo/control-coverage.md) |
-| 2 | XAML validator | `UniformGrid` and `Viewbox` incorrectly flagged as unsupported | [`docs/todo/xaml-validator-fixes.md`](docs/todo/xaml-validator-fixes.md) |
-| 3 | Code generation | `DockPanel` example uses `Content=` syntax instead of child-docking layout | [`docs/todo/control-generation-fixes.md`](docs/todo/control-generation-fixes.md) |
-| 4 | Knowledge base | `ScrollViewer.ZoomMode` property may be incorrect for Avalonia | [`docs/todo/xaml-validator-fixes.md`](docs/todo/xaml-validator-fixes.md) |
+| 1 | XAML validator | `Viewbox` incorrectly flagged as unsupported | [`docs/todo/xaml-validator-fixes.md`](docs/todo/xaml-validator-fixes.md) |
+| 2 | Code generation | `DockPanel` example uses `Content=` syntax instead of child-docking layout | [`docs/todo/control-generation-fixes.md`](docs/todo/control-generation-fixes.md) |
+| 3 | Knowledge base | `ScrollViewer.ZoomMode` property may be incorrect for Avalonia | [`docs/todo/xaml-validator-fixes.md`](docs/todo/xaml-validator-fixes.md) |
 
 ## 🌍 Contributing
 
@@ -379,9 +385,65 @@ MIT License — see the [LICENSE](LICENSE) file for details.
 
 ## 🙏 Acknowledgments
 
-- **AvaloniaUI Team** – for the excellent cross-platform UI framework
+- **[decriptor/AvaloniaUI.MCP](https://github.com/decriptor/AvaloniaUI.MCP)** – the original project this work is based on; the core knowledge base (controls, XAML patterns, migration guide) and server architecture originated there
+- **AvaloniaUI Team** – for the excellent cross-platform UI framework and the [AvaloniaUI.QuickGuides](https://github.com/AvaloniaUI/AvaloniaUI.QuickGuides) examples that informed many of the patterns in this server
+- **AvaloniaCommunity** – for the [awesome-avalonia](https://github.com/AvaloniaCommunity/awesome-avalonia) curated list, which drives the community resources knowledge base
 - **Anthropic / Microsoft** – for the Model Context Protocol specification and SDK
 - **Contributors** – everyone who helps improve this project
+
+### 📖 Knowledge Base Sources
+
+The MCP knowledge base is compiled from several authoritative sources:
+
+| Source | Content |
+|--------|---------|
+| [decriptor/AvaloniaUI.MCP](https://github.com/decriptor/AvaloniaUI.MCP) | Original controls catalog, XAML patterns, WPF migration guide |
+| [docs.avaloniaui.net](https://docs.avaloniaui.net/) | Official API reference, control documentation, tutorials |
+| [AvaloniaUI.QuickGuides](https://github.com/AvaloniaUI/AvaloniaUI.QuickGuides) | Practical patterns: bindings, drag-drop, file I/O, localization, native menus, custom controls |
+| [awesome-avalonia](https://github.com/AvaloniaCommunity/awesome-avalonia) | Ecosystem: MVVM libraries, UI themes, chart controls, community apps |
+
+### 📋 What Knowledge This Server Has
+
+The current knowledge base covers:
+
+**Controls** (in `controls.json`):
+- Layout: Grid, StackPanel, DockPanel, Canvas, WrapPanel, Panel, UniformGrid, RelativePanel
+- Input: Button, TextBox, CheckBox, RadioButton, Slider, RepeatButton, ToggleButton, SplitButton, ToggleSplitButton, MaskedTextBox
+- Display: TextBlock, Image, ProgressBar, SelectableTextBlock, PathIcon
+- Selection: ComboBox, ListBox, DataGrid, ItemsControl, ItemsRepeater
+- Container: TabControl, Expander, ScrollViewer, Border, Popup, ButtonSpinner, GridSplitter
+- Navigation: TreeView, Menu, ContextMenu, MenuItem
+- Date/Time: Calendar, DatePicker, CalendarDatePicker, TimePicker
+- Advanced: AutoCompleteBox, NumericUpDown, ToolTip, Flyout, SplitView, ColorPicker
+
+**XAML Patterns** (in `xaml-patterns.json`):
+- Basic window, MVVM window, data binding, styles/resources
+- Grid layout, user control, container queries, compiled bindings
+- Advanced styling, spacing, popup/overlay
+- Bindings and value converters, drag and drop, file picker dialogs
+- Clipboard operations, localization/i18n, splash screen
+- Native OS menus, custom control authoring, items-repeater lists
+
+**Migration Guide** (in `migration-guide.json`):
+- WPF to Avalonia control mappings, namespace changes, binding differences
+- Step-by-step migration process
+
+**Community Resources** (in `community-resources.json`):
+- MVVM frameworks: ReactiveUI, CommunityToolkit.Mvvm, Prism.Avalonia
+- UI themes: Semi.Avalonia, Material.Avalonia, FluentAvalonia
+- Chart/data-viz libraries: LiveCharts2, OxyPlot, ScottPlot
+- Control libraries: AvaloniaEdit, DataGrid extras, docking panels
+- Notable open-source apps built with Avalonia
+- Official tutorials and learning resources
+
+### 🗺️ What Could Be Added Next
+
+- **Avalonia 12 / .NET 10 specific APIs** – keep in sync with the latest release notes from [docs.avaloniaui.net](https://docs.avaloniaui.net/)
+- **Reactive programming patterns** – deeper ReactiveUI examples from the community
+- **Testing patterns** – Avalonia.Headless unit testing examples
+- **Native AOT guidance** – publishing guidance from the QuickGuides NativeAot sample
+- **Mobile/Android/iOS deployment** – cross-platform deployment patterns
+- **WASM/Browser target** – AvaloniaUI WebAssembly deployment knowledge
 
 ## 📞 Support
 
