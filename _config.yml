@@ -5,9 +5,9 @@ description: >-
   A comprehensive Model Context Protocol (MCP) server for AvaloniaUI development.
   Provides tools, resources, and guidance for building cross-platform applications with ease.
 
-url: "https://decriptor.github.io"
-baseurl: "/AvaloniaUI.MCP"
-repository: decriptor/AvaloniaUI.MCP
+url: "https://Architrixs.github.io"
+baseurl: "/MCP.AvaloniaUI"
+repository: Architrixs/MCP.AvaloniaUI
 
 # Theme configuration - using default Jekyll with custom styling
 theme: minima
@@ -22,12 +22,11 @@ plugins:
 # Site settings
 author: 
   name: AvaloniaUI.MCP Team
-  email: sshaw@decriptor.com
-  github: decriptor
+  github: Architrixs
 
 github:
-  repository_url: "https://github.com/decriptor/AvaloniaUI.MCP"
-  repository_nwo: "decriptor/AvaloniaUI.MCP"
+  repository_url: "https://github.com/Architrixs/MCP.AvaloniaUI"
+  repository_nwo: "Architrixs/MCP.AvaloniaUI"
 
 # Navigation structure
 navigation:
@@ -142,7 +141,7 @@ twitter:
 social:
   name: AvaloniaUI.MCP
   links:
-    - https://github.com/decriptor/AvaloniaUI.MCP
+    - https://github.com/Architrixs/MCP.AvaloniaUI
 
 # Enable relative links processing
 relative_links:

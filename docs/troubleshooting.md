@@ -415,8 +415,8 @@ export AVALONIA_MCP_CACHE_TTL=3600           # Cache TTL in seconds
 4. Check environment configuration
 
 ### Community Support
-- [GitHub Issues](https://github.com/decriptor/AvaloniaUI.MCP/issues)
-- [Discussions](https://github.com/decriptor/AvaloniaUI.MCP/discussions)
+- [GitHub Issues](https://github.com/Architrixs/MCP.AvaloniaUI/issues)
+- [Discussions](https://github.com/Architrixs/MCP.AvaloniaUI/discussions)
 - [Documentation](./README.md)
 
 ### Reporting Bugs

@@ -30,6 +30,30 @@
         "xaml_example": "<WrapPanel><Button Content=\"Button 1\"/><Button Content=\"Button 2\"/><Button Content=\"Button 3\"/></WrapPanel>",
         "properties": ["Orientation", "ItemWidth", "ItemHeight"],
         "usage": "Good for tag-like layouts or flowing content"
+      },
+      "Panel": {
+        "description": "Base class for all layout panels in AvaloniaUI; can be used directly as a simple layered canvas where children stack on top of each other",
+        "xaml_example": "<Panel><Rectangle Fill=\"LightBlue\" Width=\"200\" Height=\"200\"/><TextBlock Text=\"Overlay text\" HorizontalAlignment=\"Center\" VerticalAlignment=\"Center\"/></Panel>",
+        "properties": ["Background", "Children"],
+        "usage": "Layered content or as a base for custom layout panels"
+      },
+      "UniformGrid": {
+        "description": "Arranges child elements in a grid where all cells have equal size",
+        "xaml_example": "<UniformGrid Rows=\"2\" Columns=\"3\"><Button Content=\"1\"/><Button Content=\"2\"/><Button Content=\"3\"/><Button Content=\"4\"/><Button Content=\"5\"/><Button Content=\"6\"/></UniformGrid>",
+        "properties": ["Rows", "Columns"],
+        "usage": "Equal-sized grids such as button pads, color swatches, or tile layouts"
+      },
+      "RelativePanel": {
+        "description": "Defines an area within which you can position and align child objects relative to each other or the panel itself",
+        "xaml_example": "<RelativePanel><TextBlock x:Name=\"label\" Text=\"Name:\"/><TextBox RelativePanel.RightOf=\"label\" RelativePanel.AlignVerticalCenterWith=\"label\" Width=\"150\"/></RelativePanel>",
+        "properties": ["AlignLeftWith", "AlignRightWith", "AlignTopWith", "AlignBottomWith", "RightOf", "LeftOf", "Below", "Above", "AlignHorizontalCenterWith", "AlignVerticalCenterWith"],
+        "usage": "Responsive form layouts where controls are positioned relative to siblings"
+      },
+      "GridSplitter": {
+        "description": "Represents a control that redistributes space between rows or columns of a Grid when a user drags it",
+        "xaml_example": "<Grid><Grid.ColumnDefinitions><ColumnDefinition Width=\"*\"/><ColumnDefinition Width=\"Auto\"/><ColumnDefinition Width=\"*\"/></Grid.ColumnDefinitions><TextBlock Grid.Column=\"0\" Text=\"Left\"/><GridSplitter Grid.Column=\"1\" Width=\"5\" ResizeDirection=\"Columns\"/><TextBlock Grid.Column=\"2\" Text=\"Right\"/></Grid>",
+        "properties": ["ResizeDirection", "ResizeBehavior", "ShowsPreview"],
+        "usage": "Resizable split panels and adjustable layout areas"
       }
     },
     "input_controls": {
@@ -62,6 +86,36 @@
         "xaml_example": "<Slider Minimum=\"0\" Maximum=\"100\" Value=\"{Binding SliderValue}\"/>",
         "properties": ["Minimum", "Maximum", "Value", "TickFrequency", "IsSnapToTickEnabled"],
         "usage": "Numeric value selection within a range"
+      },
+      "RepeatButton": {
+        "description": "Represents a button that raises a Click event repeatedly from the time it is pressed until it is released",
+        "xaml_example": "<RepeatButton Content=\"+\" Command=\"{Binding IncrementCommand}\" Delay=\"500\" Interval=\"100\"/>",
+        "properties": ["Content", "Command", "CommandParameter", "Delay", "Interval"],
+        "usage": "Continuous actions such as scrolling, zooming, or incrementing values while held down"
+      },
+      "ToggleButton": {
+        "description": "Represents a button that can be toggled between checked and unchecked states",
+        "xaml_example": "<ToggleButton IsChecked=\"{Binding IsBold}\" Content=\"Bold\"/>",
+        "properties": ["IsChecked", "Content", "IsThreeState", "Command"],
+        "usage": "On/off toggle controls such as bold/italic formatting or feature toggles"
+      },
+      "SplitButton": {
+        "description": "Represents a button with a primary action and a secondary dropdown section for additional actions",
+        "xaml_example": "<SplitButton Content=\"Save\" Command=\"{Binding SaveCommand}\"><SplitButton.Flyout><MenuFlyout><MenuItem Header=\"Save As...\" Command=\"{Binding SaveAsCommand}\"/><MenuItem Header=\"Export\" Command=\"{Binding ExportCommand}\"/></MenuFlyout></SplitButton.Flyout></SplitButton>",
+        "properties": ["Content", "Command", "CommandParameter", "Flyout"],
+        "usage": "Primary actions with additional related options accessible from a dropdown"
+      },
+      "ToggleSplitButton": {
+        "description": "A variant of SplitButton that can be toggled between checked and unchecked states while also having a dropdown flyout",
+        "xaml_example": "<ToggleSplitButton IsChecked=\"{Binding IsBold}\" Content=\"B\"><ToggleSplitButton.Flyout><MenuFlyout><MenuItem Header=\"Bold\"/><MenuItem Header=\"Italic\"/></MenuFlyout></ToggleSplitButton.Flyout></ToggleSplitButton>",
+        "properties": ["IsChecked", "Content", "Flyout", "Command"],
+        "usage": "Toggle formatting options that also expose related choices via a flyout"
+      },
+      "MaskedTextBox": {
+        "description": "Represents a text box that restricts user input to a specific pattern defined by a mask",
+        "xaml_example": "<MaskedTextBox Mask=\"(000) 000-0000\" Text=\"{Binding PhoneNumber}\" Watermark=\"(555) 123-4567\"/>",
+        "properties": ["Mask", "Text", "Watermark", "PromptChar", "IncludeLiterals", "IncludePrompt"],
+        "usage": "Structured input such as phone numbers, dates, postal codes, or credit card numbers"
       }
     },
     "display_controls": {
@@ -82,6 +136,18 @@
         "xaml_example": "<ProgressBar Value=\"{Binding Progress}\" Minimum=\"0\" Maximum=\"100\"/>",
         "properties": ["Value", "Minimum", "Maximum", "IsIndeterminate"],
         "usage": "Indicating progress of long-running operations"
+      },
+      "SelectableTextBlock": {
+        "description": "Displays read-only text that can be selected and copied by the user",
+        "xaml_example": "<SelectableTextBlock Text=\"{Binding CopyableText}\" FontSize=\"14\"/>",
+        "properties": ["Text", "FontSize", "FontWeight", "Foreground", "TextWrapping", "SelectionStart", "SelectionEnd"],
+        "usage": "Displaying text that users may need to copy, such as error messages, IDs, or URLs"
+      },
+      "PathIcon": {
+        "description": "Displays an icon defined by a vector path geometry in Avalonia's StreamGeometry / mini-language format; scales cleanly at any size without pixelation",
+        "xaml_example": "<PathIcon Data=\"M12,2 L2,7 L12,12 L22,7 Z M2,17 L12,22 L22,17 M2,12 L12,17 L22,12\" Width=\"24\" Height=\"24\"/>",
+        "properties": ["Data", "Width", "Height", "Foreground"],
+        "usage": "Scalable vector icons; the Data property accepts Avalonia StreamGeometry mini-language strings (same as WPF Path.Data). For complex icons, use PathGeometry markup or convert SVG paths via an SVG-to-path tool."
       }
     },
     "selection_controls": {
@@ -102,6 +168,18 @@
         "xaml_example": "<DataGrid ItemsSource=\"{Binding TableData}\" AutoGenerateColumns=\"True\"/>",
         "properties": ["ItemsSource", "Columns", "AutoGenerateColumns", "CanUserAddRows"],
         "usage": "Displaying and editing tabular data"
+      },
+      "ItemsControl": {
+        "description": "Displays a collection of items using a configurable item template; base class for all item-based controls",
+        "xaml_example": "<ItemsControl ItemsSource=\"{Binding Items}\"><ItemsControl.ItemTemplate><DataTemplate><Border BorderBrush=\"Gray\" BorderThickness=\"1\" Margin=\"2\" Padding=\"4\"><TextBlock Text=\"{Binding Name}\"/></Border></DataTemplate></ItemsControl.ItemTemplate></ItemsControl>",
+        "properties": ["ItemsSource", "ItemTemplate", "ItemsPanel", "Items"],
+        "usage": "Displaying collections of data without built-in selection; fully customizable via templates"
+      },
+      "ItemsRepeater": {
+        "description": "A virtualizing items layout control that repeats a data template for each item in a collection with no built-in UI chrome",
+        "xaml_example": "<ItemsRepeater ItemsSource=\"{Binding Items}\"><ItemsRepeater.Layout><StackLayout Spacing=\"8\" Orientation=\"Vertical\"/></ItemsRepeater.Layout><ItemsRepeater.ItemTemplate><DataTemplate><TextBlock Text=\"{Binding Title}\"/></DataTemplate></ItemsRepeater.ItemTemplate></ItemsRepeater>",
+        "properties": ["ItemsSource", "ItemTemplate", "Layout"],
+        "usage": "High-performance virtualized lists and grids; use when ItemsControl does not provide enough customization"
       }
     },
     "container_controls": {
@@ -134,6 +212,12 @@
         "xaml_example": "<Popup IsOpen=\"{Binding ShowPopup}\" PlacementTarget=\"{Binding ElementName=MyButton}\"><Border Background=\"White\" BorderBrush=\"Black\" BorderThickness=\"1\"><TextBlock Text=\"Popup content\"/></Border></Popup>",
         "properties": ["IsOpen", "PlacementTarget", "Placement", "ShouldUseOverlayLayer"],
         "usage": "Tooltips, dropdown menus, and overlay content"
+      },
+      "ButtonSpinner": {
+        "description": "Represents a spinner control that wraps arbitrary content and provides up/down spin buttons",
+        "xaml_example": "<ButtonSpinner ValidSpinDirection=\"All\" Spin=\"OnSpin_Handler\"><TextBlock Text=\"{Binding CurrentValue}\"/></ButtonSpinner>",
+        "properties": ["ValidSpinDirection", "Content", "AllowSpin"],
+        "usage": "Wrapping any content with up/down navigation buttons; foundation for NumericUpDown"
       }
     },
     "navigation_controls": {
@@ -218,6 +302,12 @@
         "xaml_example": "<SplitView IsPaneOpen=\"{Binding IsPaneOpen}\" DisplayMode=\"Overlay\" PaneBackground=\"LightGray\"><SplitView.Pane><ListBox ItemsSource=\"{Binding NavigationItems}\"/></SplitView.Pane><SplitView.Content><ContentControl Content=\"{Binding CurrentView}\"/></SplitView.Content></SplitView>",
         "properties": ["IsPaneOpen", "DisplayMode", "OpenPaneLength", "PaneBackground", "CompactPaneLength"],
         "usage": "Navigation panes and master-detail layouts"
+      },
+      "ColorPicker": {
+        "description": "Represents a control that lets users pick a color using spectrum, palette, or component-based input",
+        "xaml_example": "<ColorPicker Color=\"{Binding SelectedColor}\" IsAlphaEnabled=\"True\" IsAlphaVisible=\"True\"/>",
+        "properties": ["Color", "IsAlphaEnabled", "IsAlphaVisible", "IsColorSpectrumVisible", "IsColorPaletteVisible", "PaletteColors"],
+        "usage": "Color selection in design tools, theming panels, or any color configuration UI"
       }
     }
   }

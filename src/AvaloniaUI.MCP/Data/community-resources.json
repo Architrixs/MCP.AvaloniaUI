@@ -1,0 +1,185 @@
+{
+  "avalonia_community_resources": {
+    "mvvm_frameworks": {
+      "ReactiveUI": {
+        "description": "A composable, cross-platform model-view-viewmodel framework for all .NET platforms; the most popular MVVM library in the Avalonia ecosystem",
+        "nuget": "ReactiveUI",
+        "docs_url": "https://www.reactiveui.net/",
+        "github_url": "https://github.com/reactiveui/ReactiveUI",
+        "usage": "Use ReactiveObject as your ViewModel base class; use WhenAnyValue, WhenAnyObservable, and ReactiveCommand for reactive bindings",
+        "example": "// ReactiveUI ViewModel\npublic class MainViewModel : ReactiveObject\n{\n    private string _searchText = string.Empty;\n    public string SearchText\n    {\n        get => _searchText;\n        set => this.RaiseAndSetIfChanged(ref _searchText, value);\n    }\n\n    public ReactiveCommand<Unit, Unit> SearchCommand { get; }\n\n    public MainViewModel()\n    {\n        var canSearch = this.WhenAnyValue(x => x.SearchText, text => !string.IsNullOrEmpty(text));\n        SearchCommand = ReactiveCommand.Create(ExecuteSearch, canSearch);\n    }\n\n    private void ExecuteSearch() { /* ... */ }\n}"
+      },
+      "CommunityToolkit.Mvvm": {
+        "description": "Microsoft's lightweight, fast, and modular MVVM library with source generators for observable properties and commands",
+        "nuget": "CommunityToolkit.Mvvm",
+        "docs_url": "https://learn.microsoft.com/en-us/dotnet/communitytoolkit/mvvm/",
+        "github_url": "https://github.com/CommunityToolkit/dotnet",
+        "usage": "Use [ObservableProperty] attribute to generate bindable properties; use [RelayCommand] for command generation",
+        "example": "// CommunityToolkit.Mvvm ViewModel\n[ObservableObject]\npublic partial class MainViewModel\n{\n    [ObservableProperty]\n    private string _userName = string.Empty;\n\n    [RelayCommand]\n    private void Save()\n    {\n        // Save logic here\n    }\n}"
+      },
+      "Prism.Avalonia": {
+        "description": "Prism framework port for Avalonia providing modular application infrastructure with region-based navigation and dialog service",
+        "nuget": "Prism.Avalonia",
+        "github_url": "https://github.com/AvaloniaCommunity/Prism.Avalonia",
+        "usage": "Use PrismApplication as the App base class; register modules with IModuleCatalog; use IRegionManager for navigation",
+        "example": "// Prism module registration\npublic class App : PrismApplication\n{\n    protected override Window CreateShell() => Container.Resolve<MainWindow>();\n    protected override void RegisterTypes(IContainerRegistry registry)\n    {\n        registry.RegisterForNavigation<UserView>();\n    }\n}"
+      }
+    },
+    "ui_themes": {
+      "Semi.Avalonia": {
+        "description": "A port of Semi Design (by ByteDance) providing a modern, clean UI theme with light and dark modes",
+        "nuget": "Semi.Avalonia",
+        "github_url": "https://github.com/irihitech/Semi.Avalonia",
+        "usage": "Add to App.axaml Styles: <StyleInclude Source=\"avares://Semi.Avalonia/Themes/Index.axaml\"/>",
+        "key_features": ["Light and dark theme", "Colorful accent variants", "Modern card-based design"]
+      },
+      "Material.Avalonia": {
+        "description": "Material Design 3 (Material You) theme for Avalonia with dynamic color support",
+        "nuget": "Material.Avalonia",
+        "github_url": "https://github.com/AvaloniaCommunity/Material.Avalonia",
+        "usage": "Replace default theme with MaterialTheme in App.axaml; use MaterialDesignTheme resource dictionary",
+        "key_features": ["Material Design 3 components", "Dynamic color / Material You", "Ripple effects"]
+      },
+      "FluentAvalonia": {
+        "description": "Brings WinUI 3 / Fluent Design controls and styles to Avalonia including NavigationView, InfoBar, and more",
+        "nuget": "FluentAvalonia",
+        "github_url": "https://github.com/amwx/FluentAvalonia",
+        "usage": "Add FluentAvaloniaTheme to App.axaml; use FA namespace for extra controls like NavigationView",
+        "key_features": ["NavigationView control", "WinUI-style info bars and badges", "Windows 11 Mica effect support"]
+      },
+      "Citrus.Avalonia": {
+        "description": "A set of fresh, juicy Avalonia themes with vibrant color options",
+        "nuget": "Citrus.Avalonia",
+        "github_url": "https://github.com/AvaloniaUI/Citrus.Avalonia",
+        "usage": "Include one of the theme styles (Rust, Candy, SeaFoam, Magma) in App.axaml",
+        "key_features": ["Multiple colorful theme variants", "Clean simple styling"]
+      }
+    },
+    "chart_libraries": {
+      "LiveCharts2": {
+        "description": "Animated, responsive charts library with Avalonia, WPF, WinForms, and Blazor support",
+        "nuget": "LiveChartsCore.SkiaSharpView.Avalonia",
+        "github_url": "https://github.com/beto-rodriguez/LiveCharts2",
+        "usage": "Add LiveCharts control to XAML and bind ISeries[] from ViewModel",
+        "supported_charts": ["Line", "Bar", "Pie", "Scatter", "Heat map", "Candle stick", "Polar"]
+      },
+      "OxyPlot.Avalonia": {
+        "description": "A cross-platform plotting library with rich scientific chart types",
+        "nuget": "OxyPlot.Avalonia",
+        "github_url": "https://github.com/oxyplot/oxyplot",
+        "usage": "Use PlotView control with a PlotModel containing Series definitions",
+        "supported_charts": ["Line", "Bar", "Pie", "Scatter", "Contour", "Heat map"]
+      },
+      "ScottPlot.Avalonia": {
+        "description": "Fast interactive data plotting library optimized for large datasets",
+        "nuget": "ScottPlot.Avalonia",
+        "github_url": "https://github.com/ScottPlot/ScottPlot",
+        "usage": "Add AvaPlot control to XAML and call myPlot.Plot.Add.* methods in code-behind",
+        "key_features": ["Renders millions of points at 60+ fps", "Interactive pan/zoom", "Signal plot for streaming data"]
+      }
+    },
+    "control_libraries": {
+      "AvaloniaEdit": {
+        "description": "Port of AvalonEdit (from SharpDevelop/ILSpy), providing a powerful code editor control with syntax highlighting",
+        "nuget": "AvaloniaEdit",
+        "github_url": "https://github.com/AvaloniaUI/AvaloniaEdit",
+        "usage": "Use TextEditor control in XAML; configure SyntaxHighlighting via HighlightingManager",
+        "key_features": ["Syntax highlighting for 50+ languages", "Code folding", "Line numbers", "Find/replace"]
+      },
+      "Avalonia.DataGrid": {
+        "description": "Official DataGrid control for Avalonia with sorting, grouping, and editing",
+        "nuget": "Avalonia.Controls.DataGrid",
+        "docs_url": "https://docs.avaloniaui.net/docs/reference/controls/datagrid",
+        "usage": "Requires separate Styles include: <StyleInclude Source=\"avares://Avalonia.Controls.DataGrid/Themes/Fluent.xaml\"/>",
+        "key_features": ["Auto-generated or manual columns", "Row editing", "Sort by column header", "Frozen columns"]
+      },
+      "Dock.Avalonia": {
+        "description": "A docking layout system for building IDE-like UIs with draggable, dockable panels",
+        "nuget": "Dock.Avalonia",
+        "github_url": "https://github.com/wieslawsoltes/Dock",
+        "usage": "Define a DockControl in XAML with a factory and layout; implement IDockFactory",
+        "key_features": ["Drag-and-drop docking", "Floating windows", "Persistent layout serialization"]
+      },
+      "Avalonia.Xaml.Behaviors": {
+        "description": "XAML Behaviors for Avalonia: attach reusable interaction logic without code-behind",
+        "nuget": "Avalonia.Xaml.Interactivity",
+        "github_url": "https://github.com/AvaloniaUI/Avalonia.Xaml.Behaviors",
+        "usage": "Attach behaviors via <i:Interaction.Behaviors> in XAML; use EventTriggerBehavior, DataTriggerBehavior",
+        "key_features": ["Event-to-command bindings", "Data triggers", "Custom behavior authoring"]
+      },
+      "AsyncImageLoader.Avalonia": {
+        "description": "Provides async loading of images from URLs for the Avalonia Image control",
+        "nuget": "AsyncImageLoader.Avalonia",
+        "github_url": "https://github.com/AvaloniaUtils/AsyncImageLoader.Avalonia",
+        "usage": "Replace Image Source binding with asyncImageLoader:ImageLoader.Source attached property"
+      }
+    },
+    "notable_applications": {
+      "AvaloniaILSpy": {
+        "description": "Avalonia port of the ILSpy .NET decompiler – a real-world example of a complex, production Avalonia app",
+        "github_url": "https://github.com/icsharpcode/AvaloniaILSpy"
+      },
+      "WalletWasabi": {
+        "description": "Privacy-focused Bitcoin wallet (Windows, Linux, macOS) – one of the most mature Avalonia apps in production",
+        "github_url": "https://github.com/WalletWasabi/WalletWasabi"
+      },
+      "Ryujinx": {
+        "description": "Nintendo Switch emulator with excellent accuracy; uses Avalonia for its cross-platform UI",
+        "github_url": "https://git.ryujinx.app/ryubing/ryujinx"
+      },
+      "SourceGit": {
+        "description": "Cross-platform Git desktop client built with Avalonia – a clean example of a file-system-heavy Avalonia app",
+        "github_url": "https://github.com/sourcegit-scm/sourcegit"
+      },
+      "RoslynPad": {
+        "description": "Cross-platform C# editor powered by Roslyn and AvalonEdit; demonstrates editor integration patterns",
+        "github_url": "https://github.com/aelij/RoslynPad"
+      }
+    },
+    "official_resources": {
+      "documentation": {
+        "url": "https://docs.avaloniaui.net/",
+        "description": "Official AvaloniaUI documentation covering controls, styles, binding, animation, and deployment",
+        "sections": [
+          "Getting Started",
+          "Concepts (MVVM, Binding, Styles, Animations)",
+          "Controls Reference",
+          "Tutorials",
+          "Guides (Platforms, Accessibility, Performance)",
+          "API Reference"
+        ]
+      },
+      "quick_guides": {
+        "url": "https://github.com/AvaloniaUI/AvaloniaUI.QuickGuides",
+        "description": "Official collection of minimal working examples for common Avalonia tasks",
+        "topics": [
+          "BindingsAndConverters",
+          "ButtonCustomize",
+          "ClipboardOps",
+          "CustomControl",
+          "DragDropOps",
+          "FileOps",
+          "GoogleFonts",
+          "GroupBox",
+          "IoCFileOps",
+          "LoadingImages",
+          "Localization",
+          "MakingLists",
+          "NativeAot",
+          "NativeMenuOps",
+          "Porting10",
+          "Porting11",
+          "SplashScreen"
+        ]
+      },
+      "samples": {
+        "url": "https://github.com/AvaloniaUI/Avalonia.Samples",
+        "description": "Community-contributed samples for specific Avalonia features"
+      },
+      "awesome_avalonia": {
+        "url": "https://github.com/AvaloniaCommunity/awesome-avalonia",
+        "description": "Curated list of Avalonia libraries, tools, and open-source applications"
+      }
+    }
+  }
+}

@@ -128,6 +128,120 @@
         "Enhanced popup behavior across platforms",
         "New feature in AvaloniaUI 11.3+"
       ]
+    },
+    "value_converter": {
+      "name": "Value Converters (Bindings and Converters)",
+      "description": "Implementing IValueConverter to transform bound data for display; sourced from AvaloniaUI.QuickGuides/BindingsAndConverters",
+      "xaml": "<!-- Converter definition in XAML resources -->\n<Window.Resources>\n    <local:BoolToVisibilityConverter x:Key=\"BoolToVis\"/>\n    <local:EnumToStringConverter x:Key=\"EnumToStr\"/>\n</Window.Resources>\n\n<!-- Using converters in bindings -->\n<TextBlock IsVisible=\"{Binding IsLoggedIn, Converter={StaticResource BoolToVis}}\"\n           Text=\"Welcome!\"/>\n<TextBlock Text=\"{Binding Status, Converter={StaticResource EnumToStr}}\"/>",
+      "code_behind": "// C# converter implementation\npublic class BoolToVisibilityConverter : IValueConverter\n{\n    public object? Convert(object? value, Type targetType, object? parameter, CultureInfo culture)\n        => value is bool b && b;\n\n    public object? ConvertBack(object? value, Type targetType, object? parameter, CultureInfo culture)\n        => value is bool b && b;\n}",
+      "key_points": [
+        "Implement IValueConverter for one-way transforms",
+        "Implement IMultiValueConverter for multi-binding scenarios",
+        "Register converters as StaticResource in Resources section",
+        "Use x:DataType for compile-time binding validation",
+        "FuncValueConverter<TIn,TOut> is a handy inline alternative"
+      ]
+    },
+    "drag_and_drop": {
+      "name": "Drag and Drop",
+      "description": "Implementing drag-and-drop operations between controls; sourced from AvaloniaUI.QuickGuides/DragDropOps",
+      "xaml": "<!-- Drop target -->\n<Border Background=\"LightBlue\"\n        AllowDrop=\"True\"\n        DragDrop.Drop=\"OnDrop\"\n        DragDrop.DragOver=\"OnDragOver\"\n        Height=\"150\" Width=\"200\">\n    <TextBlock Text=\"Drop here\" HorizontalAlignment=\"Center\" VerticalAlignment=\"Center\"/>\n</Border>\n\n<!-- Drag source (initiated in code-behind) -->\n<Button Content=\"Drag me\" PointerPressed=\"OnPointerPressed\"/>",
+      "code_behind": "// Start drag in code-behind\nprivate async void OnPointerPressed(object? sender, PointerPressedEventArgs e)\n{\n    var data = new DataObject();\n    data.Set(DataFormats.Text, \"Hello from drag source\");\n    await DragDrop.DoDragDrop(e, data, DragDropEffects.Copy);\n}\n\n// Handle drop\nprivate void OnDrop(object? sender, DragEventArgs e)\n{\n    if (e.Data.Contains(DataFormats.Text))\n    {\n        var text = e.Data.GetText();\n        // Process dropped text\n    }\n}\n\nprivate void OnDragOver(object? sender, DragEventArgs e)\n{\n    e.DragEffects = e.Data.Contains(DataFormats.Text)\n        ? DragDropEffects.Copy\n        : DragDropEffects.None;\n}",
+      "key_points": [
+        "Set AllowDrop=\"True\" on the drop target",
+        "Attach DragDrop.Drop and DragDrop.DragOver event handlers",
+        "Use DataObject to pass typed data between elements",
+        "Call DragDrop.DoDragDrop to initiate the drag operation",
+        "Supports DataFormats.Text, Files, and custom formats"
+      ]
+    },
+    "file_picker": {
+      "name": "File Picker Dialogs",
+      "description": "Opening and saving files using the platform file picker; sourced from AvaloniaUI.QuickGuides/FileOps",
+      "code_behind": "// Open file picker\nprivate async Task OpenFileAsync()\n{\n    var topLevel = TopLevel.GetTopLevel(this)!;\n    var files = await topLevel.StorageProvider.OpenFilePickerAsync(\n        new FilePickerOpenOptions\n        {\n            Title = \"Open File\",\n            AllowMultiple = false,\n            FileTypeFilter = new[]\n            {\n                new FilePickerFileType(\"Text Files\") { Patterns = new[] { \"*.txt\" } },\n                FilePickerFileTypes.All\n            }\n        });\n\n    if (files.Count >= 1)\n    {\n        await using var stream = await files[0].OpenReadAsync();\n        using var reader = new StreamReader(stream);\n        var content = await reader.ReadToEndAsync();\n    }\n}\n\n// Save file picker\nprivate async Task SaveFileAsync(string content)\n{\n    var topLevel = TopLevel.GetTopLevel(this)!;\n    var file = await topLevel.StorageProvider.SaveFilePickerAsync(\n        new FilePickerSaveOptions\n        {\n            Title = \"Save File\",\n            DefaultExtension = \"txt\",\n            FileTypeChoices = new[] { new FilePickerFileType(\"Text\") { Patterns = new[] { \"*.txt\" } } }\n        });\n\n    if (file is not null)\n    {\n        await using var stream = await file.OpenWriteAsync();\n        await using var writer = new StreamWriter(stream);\n        await writer.WriteAsync(content);\n    }\n}",
+      "key_points": [
+        "Use TopLevel.GetTopLevel(this) to access platform services",
+        "StorageProvider.OpenFilePickerAsync for opening files",
+        "StorageProvider.SaveFilePickerAsync for saving files",
+        "FilePickerFileType defines extension filters",
+        "Works cross-platform: Windows, macOS, Linux, Browser"
+      ]
+    },
+    "clipboard": {
+      "name": "Clipboard Operations",
+      "description": "Reading from and writing to the system clipboard; sourced from AvaloniaUI.QuickGuides/ClipboardOps",
+      "code_behind": "// Write text to clipboard\nprivate async Task CopyToClipboardAsync(string text)\n{\n    var topLevel = TopLevel.GetTopLevel(this)!;\n    if (topLevel.Clipboard is { } clipboard)\n    {\n        await clipboard.SetTextAsync(text);\n    }\n}\n\n// Read text from clipboard\nprivate async Task<string?> PasteFromClipboardAsync()\n{\n    var topLevel = TopLevel.GetTopLevel(this)!;\n    return topLevel.Clipboard is { } clipboard\n        ? await clipboard.GetTextAsync()\n        : null;\n}",
+      "key_points": [
+        "Access clipboard via TopLevel.GetTopLevel(this).Clipboard",
+        "SetTextAsync to write, GetTextAsync to read plain text",
+        "Use DataObject for rich content (images, files)",
+        "ClearAsync clears the clipboard contents",
+        "Clipboard access may require user gesture on some platforms"
+      ]
+    },
+    "localization": {
+      "name": "Localization / i18n",
+      "description": "Implementing multi-language support using ResX resource files; sourced from AvaloniaUI.QuickGuides/Localization",
+      "xaml": "<TextBlock Text=\"{x:Static loc:Resources.Greeting}\"/>\n<Button Content=\"{x:Static loc:Resources.Save}\"/>",
+      "code_behind": "// Switch culture at runtime\nprivate void SwitchLanguage(string cultureName)\n{\n    var culture = new CultureInfo(cultureName);\n    Thread.CurrentThread.CurrentCulture = culture;\n    Thread.CurrentThread.CurrentUICulture = culture;\n    // Trigger UI refresh via Assets.Loader or navigation\n}",
+      "key_points": [
+        "Add .resx files per culture: Resources.resx, Resources.de.resx, Resources.fr.resx",
+        "Reference strings via {x:Static loc:Resources.Key} in XAML",
+        "Set Thread.CurrentUICulture to switch language at runtime",
+        "Consider NuGet packages like ResX.Generator for source generation",
+        "Avalonia supports RTL layout via FlowDirection property"
+      ]
+    },
+    "splash_screen": {
+      "name": "Splash Screen",
+      "description": "Displaying a splash screen on application startup; sourced from AvaloniaUI.QuickGuides/SplashScreen",
+      "xaml": "<!-- SplashWindow.axaml -->\n<Window xmlns=\"https://github.com/avaloniaui\"\n        xmlns:x=\"http://schemas.microsoft.com/winfx/2006/xaml\"\n        x:Class=\"MyApp.SplashWindow\"\n        Width=\"400\" Height=\"250\"\n        WindowStartupLocation=\"CenterScreen\"\n        SystemDecorations=\"None\"\n        TransparencyLevelHint=\"Transparent\"\n        Background=\"Transparent\">\n    <Border Background=\"#FF1976D2\" CornerRadius=\"12\">\n        <StackPanel VerticalAlignment=\"Center\" HorizontalAlignment=\"Center\" Spacing=\"16\">\n            <Image Source=\"/Assets/logo.png\" Width=\"96\" Height=\"96\"/>\n            <TextBlock Text=\"Loading…\" Foreground=\"White\" FontSize=\"18\"/>\n            <ProgressBar IsIndeterminate=\"True\" Width=\"200\"/>\n        </StackPanel>\n    </Border>\n</Window>",
+      "code_behind": "// In App.axaml.cs\npublic override async void OnFrameworkInitializationCompleted()\n{\n    var splash = new SplashWindow();\n    splash.Show();\n\n    await Task.Run(() => /* heavy init here */ Thread.Sleep(2000));\n\n    var mainWindow = new MainWindow();\n    mainWindow.Show();\n    splash.Close();\n\n    base.OnFrameworkInitializationCompleted();\n}",
+      "key_points": [
+        "Show SplashWindow before the main window in OnFrameworkInitializationCompleted",
+        "Use SystemDecorations=None and transparent background for a modern look",
+        "Perform heavy initialization on a background thread (Task.Run)",
+        "Close the splash and show MainWindow once init is complete",
+        "Optionally use IClassicDesktopStyleApplicationLifetime.MainWindow"
+      ]
+    },
+    "native_menu": {
+      "name": "Native OS Menu",
+      "description": "Adding a native operating-system menu (macOS menu bar, tray icon, etc.); sourced from AvaloniaUI.QuickGuides/NativeMenuOps",
+      "xaml": "<NativeMenu.Menu>\n    <NativeMenu>\n        <NativeMenuItem Header=\"File\">\n            <NativeMenuItem.Menu>\n                <NativeMenu>\n                    <NativeMenuItem Header=\"New\" Gesture=\"Ctrl+N\" Command=\"{Binding NewCommand}\"/>\n                    <NativeMenuItem Header=\"Open…\" Gesture=\"Ctrl+O\" Command=\"{Binding OpenCommand}\"/>\n                    <NativeMenuItemSeparator/>\n                    <NativeMenuItem Header=\"Quit\" Gesture=\"Ctrl+Q\" Command=\"{Binding QuitCommand}\"/>\n                </NativeMenu>\n            </NativeMenuItem.Menu>\n        </NativeMenuItem>\n    </NativeMenu>\n</NativeMenu.Menu>",
+      "code_behind": "// Attach to application in App.axaml.cs (macOS menu bar)\nif (Application.Current is { } app)\n{\n    NativeMenu.SetMenu(app, BuildNativeMenu());\n}",
+      "key_points": [
+        "NativeMenu renders as the OS native menu bar on macOS",
+        "Use NativeMenuItem.Gesture for keyboard shortcuts",
+        "NativeMenuItemSeparator adds a visual divider",
+        "Attach to Application for global menu (macOS) or Window for window menu",
+        "Combine with TrayIcon for system tray support on Windows/Linux"
+      ]
+    },
+    "custom_control": {
+      "name": "Custom TemplatedControl",
+      "description": "Creating a fully custom control with a default control template; sourced from AvaloniaUI.QuickGuides/CustomControl",
+      "code_behind": "// MyRatingControl.cs\npublic class MyRatingControl : TemplatedControl\n{\n    public static readonly StyledProperty<int> ValueProperty =\n        AvaloniaProperty.Register<MyRatingControl, int>(nameof(Value), defaultValue: 0);\n\n    public int Value\n    {\n        get => GetValue(ValueProperty);\n        set => SetValue(ValueProperty, value);\n    }\n}",
+      "xaml": "<!-- Styles/MyRatingControl.axaml (default template) -->\n<Styles xmlns=\"https://github.com/avaloniaui\"\n        xmlns:local=\"using:MyApp.Controls\">\n    <Style Selector=\"local|MyRatingControl\">\n        <Setter Property=\"Template\">\n            <ControlTemplate>\n                <StackPanel Orientation=\"Horizontal\" TemplateBinding=\"Value\">\n                    <!-- Star icons here -->\n                </StackPanel>\n            </ControlTemplate>\n        </Setter>\n    </Style>\n</Styles>",
+      "key_points": [
+        "Inherit from TemplatedControl for full templating support",
+        "Define StyledProperty for each bindable property",
+        "Provide a default ControlTemplate in a Styles file",
+        "Override OnApplyTemplate to access named template parts",
+        "Add the Styles include to App.axaml for global availability"
+      ]
+    },
+    "items_repeater_list": {
+      "name": "Virtualized List with ItemsRepeater",
+      "description": "Building high-performance scrollable lists using ItemsRepeater with virtualization; sourced from AvaloniaUI.QuickGuides/MakingLists",
+      "xaml": "<ScrollViewer>\n    <ItemsRepeater ItemsSource=\"{Binding LargeCollection}\">\n        <ItemsRepeater.Layout>\n            <StackLayout Spacing=\"4\" Orientation=\"Vertical\"/>\n        </ItemsRepeater.Layout>\n        <ItemsRepeater.ItemTemplate>\n            <DataTemplate x:DataType=\"local:MyItem\">\n                <Border Background=\"White\" CornerRadius=\"4\" Padding=\"12\" Margin=\"4,2\">\n                    <StackPanel Orientation=\"Horizontal\" Spacing=\"8\">\n                        <Image Source=\"{Binding Thumbnail}\" Width=\"32\" Height=\"32\"/>\n                        <StackPanel>\n                            <TextBlock Text=\"{Binding Title}\" FontWeight=\"Bold\"/>\n                            <TextBlock Text=\"{Binding Subtitle}\" Opacity=\"0.6\"/>\n                        </StackPanel>\n                    </StackPanel>\n                </Border>\n            </DataTemplate>\n        </ItemsRepeater.ItemTemplate>\n    </ItemsRepeater>\n</ScrollViewer>",
+      "key_points": [
+        "Wrap ItemsRepeater in ScrollViewer for scrollable lists",
+        "StackLayout, WrapLayout, and UniformGridLayout are built-in layouts",
+        "Use x:DataType on DataTemplate for compiled bindings",
+        "ItemsRepeater virtualizes by default; ideal for thousands of items",
+        "No selection built-in – implement selection in your ViewModel"
+      ]
     }
   }
 }

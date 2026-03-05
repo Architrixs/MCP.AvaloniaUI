@@ -42,8 +42,8 @@ Thank you for your interest in contributing to the AvaloniaUI MCP Server! This d
 
 1. **Clone the repository**:
    ```bash
-   git clone https://github.com/your-username/AvaloniaUI.MCP.git
-   cd AvaloniaUI.MCP
+   git clone https://github.com/your-username/MCP.AvaloniaUI.git
+   cd MCP.AvaloniaUI
    ```
 
 2. **Restore dependencies**:
