@@ -50,8 +50,8 @@ HEALTHCHECK --interval=30s --timeout=10s --start-period=5s --retries=3 \
 LABEL org.opencontainers.image.title="AvaloniaUI MCP Server"
 LABEL org.opencontainers.image.description="Comprehensive Model Context Protocol server for AvaloniaUI development"
 LABEL org.opencontainers.image.vendor="AvaloniaUI.MCP"
-LABEL org.opencontainers.image.source="https://github.com/decriptor/AvaloniaUI.MCP"
-LABEL org.opencontainers.image.documentation="https://github.com/decriptor/AvaloniaUI.MCP/blob/main/README.md"
+LABEL org.opencontainers.image.source="https://github.com/Architrixs/MCP.AvaloniaUI"
+LABEL org.opencontainers.image.documentation="https://github.com/Architrixs/MCP.AvaloniaUI/blob/main/README.md"
 
 # Default entrypoint
 ENTRYPOINT ["dotnet", "AvaloniaUI.MCP.dll"]

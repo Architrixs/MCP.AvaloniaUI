@@ -33,8 +33,8 @@ AvaloniaUI.MCP is a professional-grade MCP server built on .NET 10.0 that provid
 
 ```bash
 # Clone the repository
-git clone https://github.com/decriptor/AvaloniaUI.MCP.git
-cd AvaloniaUI.MCP
+git clone https://github.com/Architrixs/MCP.AvaloniaUI.git
+cd MCP.AvaloniaUI
 
 # Build the project
 dotnet build
@@ -52,8 +52,8 @@ Configure your MCP client to connect to the server via STDIO transport:
   "mcpServers": {
     "avalonia": {
       "command": "dotnet",
-      "args": ["run", "--project", "path/to/AvaloniaUI.MCP/src/AvaloniaUI.MCP/AvaloniaUI.MCP.csproj"],
-      "cwd": "path/to/AvaloniaUI.MCP"
+      "args": ["run", "--project", "path/to/MCP.AvaloniaUI/src/AvaloniaUI.MCP/AvaloniaUI.MCP.csproj"],
+      "cwd": "path/to/MCP.AvaloniaUI"
     }
   }
 }
@@ -63,7 +63,7 @@ For Codex Desktop/CLI, you can also register it with:
 
 ```bash
 # Linux/macOS
-codex mcp add avalonia -- sh -lc 'cd /path/to/AvaloniaUI.MCP && dotnet run --project src/AvaloniaUI.MCP/AvaloniaUI.MCP.csproj'
+codex mcp add avalonia -- sh -lc 'cd /path/to/MCP.AvaloniaUI && dotnet run --project src/AvaloniaUI.MCP/AvaloniaUI.MCP.csproj'
 
 # Windows (PowerShell)
 codex mcp add avalonia -- powershell -NoProfile -Command "Set-Location 'C:\\path\\to\\AvaloniaUI.MCP'; dotnet run --project src/AvaloniaUI.MCP/AvaloniaUI.MCP.csproj"
@@ -126,8 +126,8 @@ Optimized for production use:
 
 ## 🤝 Community
 
-- [GitHub Issues](https://github.com/decriptor/AvaloniaUI.MCP/issues)
-- [Discussions](https://github.com/decriptor/AvaloniaUI.MCP/discussions)
+- [GitHub Issues](https://github.com/Architrixs/MCP.AvaloniaUI/issues)
+- [Discussions](https://github.com/Architrixs/MCP.AvaloniaUI/discussions)
 - [Contributing Guide](../CONTRIBUTING.md)
 
 ## 📄 License

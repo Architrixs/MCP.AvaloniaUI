@@ -19,8 +19,8 @@ Before you begin, ensure you have:
 ### 1. Clone the Repository
 
 ```bash
-git clone https://github.com/decriptor/AvaloniaUI.MCP.git
-cd AvaloniaUI.MCP
+git clone https://github.com/Architrixs/MCP.AvaloniaUI.git
+cd MCP.AvaloniaUI
 ```
 
 ### 2. Build the Project
@@ -49,9 +49,9 @@ Add the following to your Claude Desktop MCP configuration:
       "args": [
         "run",
         "--project",
-        "/path/to/AvaloniaUI.MCP/src/AvaloniaUI.MCP/AvaloniaUI.MCP.csproj"
+        "/path/to/MCP.AvaloniaUI/src/AvaloniaUI.MCP/AvaloniaUI.MCP.csproj"
       ],
-      "cwd": "/path/to/AvaloniaUI.MCP"
+      "cwd": "/path/to/MCP.AvaloniaUI"
     }
   }
 }
@@ -63,10 +63,10 @@ Add AvaloniaUI.MCP to Codex:
 
 ```bash
 # Linux/macOS
-codex mcp add avalonia -- sh -lc 'cd /path/to/AvaloniaUI.MCP && dotnet run --project src/AvaloniaUI.MCP/AvaloniaUI.MCP.csproj'
+codex mcp add avalonia -- sh -lc 'cd /path/to/MCP.AvaloniaUI && dotnet run --project src/AvaloniaUI.MCP/AvaloniaUI.MCP.csproj'
 
 # Windows (PowerShell)
-codex mcp add avalonia -- powershell -NoProfile -Command "Set-Location 'C:\\path\\to\\AvaloniaUI.MCP'; dotnet run --project src/AvaloniaUI.MCP/AvaloniaUI.MCP.csproj"
+codex mcp add avalonia -- powershell -NoProfile -Command "Set-Location 'C:\\path\\to\\MCP.AvaloniaUI'; dotnet run --project src/AvaloniaUI.MCP/AvaloniaUI.MCP.csproj"
 ```
 
 Verify it is configured:
@@ -84,10 +84,10 @@ Option 1 (recommended): add it with CLI:
 
 ```bash
 # Linux/macOS
-codex mcp add avalonia -- sh -lc 'cd /path/to/AvaloniaUI.MCP && dotnet run --project src/AvaloniaUI.MCP/AvaloniaUI.MCP.csproj'
+codex mcp add avalonia -- sh -lc 'cd /path/to/MCP.AvaloniaUI && dotnet run --project src/AvaloniaUI.MCP/AvaloniaUI.MCP.csproj'
 
 # Windows (PowerShell)
-codex mcp add avalonia -- powershell -NoProfile -Command "Set-Location 'C:\\path\\to\\AvaloniaUI.MCP'; dotnet run --project src/AvaloniaUI.MCP/AvaloniaUI.MCP.csproj"
+codex mcp add avalonia -- powershell -NoProfile -Command "Set-Location 'C:\\path\\to\\MCP.AvaloniaUI'; dotnet run --project src/AvaloniaUI.MCP/AvaloniaUI.MCP.csproj"
 ```
 
 Option 2: manually edit `~/.codex/config.toml`:
@@ -96,14 +96,14 @@ Option 2: manually edit `~/.codex/config.toml`:
 [mcp_servers.avalonia]
 command = "dotnet"
 args = ["run", "--project", "src/AvaloniaUI.MCP/AvaloniaUI.MCP.csproj"]
-cwd = "/path/to/AvaloniaUI.MCP"
+cwd = "/path/to/MCP.AvaloniaUI"
 enabled = true
 ```
 
 On Windows, use a Windows path for `cwd`, for example:
 
 ```toml
-cwd = "C:\\path\\to\\AvaloniaUI.MCP"
+cwd = "C:\\path\\to\\MCP.AvaloniaUI"
 ```
 
 Restart Codex Desktop after updating the config.
@@ -121,9 +121,9 @@ Install the MCP extension and add to your settings:
       "args": [
         "run",
         "--project",
-        "/path/to/AvaloniaUI.MCP/src/AvaloniaUI.MCP/AvaloniaUI.MCP.csproj"
+        "/path/to/MCP.AvaloniaUI/src/AvaloniaUI.MCP/AvaloniaUI.MCP.csproj"
       ],
-      "cwd": "/path/to/AvaloniaUI.MCP"
+      "cwd": "/path/to/MCP.AvaloniaUI"
     }
   ]
 }
@@ -205,7 +205,7 @@ This repository requires SDK 10 and includes `global.json` pinned to `10.0.100`.
 dotnet --list-sdks
 
 # Run from repository root so global.json is applied
-cd /path/to/AvaloniaUI.MCP
+cd /path/to/MCP.AvaloniaUI
 dotnet --version  # should print 10.0.x
 dotnet run --project src/AvaloniaUI.MCP/AvaloniaUI.MCP.csproj
 ```
@@ -246,11 +246,11 @@ dotnet run --project src/AvaloniaUI.MCP/AvaloniaUI.MCP.csproj 2>&1 | tee avaloni
 
 - Check the [troubleshooting guide](./troubleshooting.md)
 - Review [common examples](./examples/)
-- Open an issue on [GitHub](https://github.com/decriptor/AvaloniaUI.MCP/issues)
+- Open an issue on [GitHub](https://github.com/Architrixs/MCP.AvaloniaUI/issues)
 
 ## Next Steps
 
 - Explore the [Tools Reference](./tools/) for complete functionality
 - Check out [Examples](./examples/) for common use cases
 - Read the [Tools Reference](./tools/) for advanced usage
-- Join the community [discussions](https://github.com/decriptor/AvaloniaUI.MCP/discussions)
+- Join the community [discussions](https://github.com/Architrixs/MCP.AvaloniaUI/discussions)

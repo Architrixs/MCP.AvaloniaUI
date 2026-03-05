@@ -164,7 +164,7 @@ description: "A comprehensive Model Context Protocol server that provides intell
             
             <div class="bg-gray-900 rounded-lg p-6 text-green-400 font-mono text-sm">
                 <div class="mb-2 text-gray-500"># Pull the latest image</div>
-                <div class="mb-4">$ docker pull ghcr.io/decriptor/avaloniaui.mcp:latest</div>
+                <div class="mb-4">$ docker pull ghcr.io/architrixs/mcp.avaloniaui:latest</div>
                 
                 <div class="mb-2 text-gray-500"># Configure Claude Desktop</div>
                 <div class="text-yellow-400">{</div>
@@ -172,7 +172,7 @@ description: "A comprehensive Model Context Protocol server that provides intell
                 <div class="ml-4">"avaloniaui-mcp": {</div>
                 <div class="ml-6">"command": "docker",</div>
                 <div class="ml-6">"args": ["run", "--rm", "-i",</div>
-                <div class="ml-8">"ghcr.io/decriptor/avaloniaui.mcp:latest"]</div>
+                <div class="ml-8">"ghcr.io/architrixs/mcp.avaloniaui:latest"]</div>
                 <div class="ml-4">}</div>
                 <div class="ml-2">}</div>
                 <div class="text-yellow-400">}</div>
