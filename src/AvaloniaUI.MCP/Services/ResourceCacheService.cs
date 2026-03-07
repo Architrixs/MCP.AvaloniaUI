@@ -261,7 +261,7 @@ public static class ResourceCacheService
                 }
                 catch (Exception ex)
                 {
-                    Console.WriteLine($"Warning: Failed to preload resource {filePath}: {ex.Message}");
+                    Console.Error.WriteLine($"Warning: Failed to preload resource {filePath}: {ex.Message}");
                 }
             });
 

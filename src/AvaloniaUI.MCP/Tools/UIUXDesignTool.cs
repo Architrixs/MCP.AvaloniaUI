@@ -302,61 +302,42 @@ public static class UIUXDesignTool
 
     static string GenerateAdaptivePanels(ResponsiveConfiguration config)
     {
-        return @"<Panel>
-    <!-- Adaptive Panel Container -->
-    <AdaptiveContainer x:Name=""MainContainer"">
-        <AdaptiveContainer.Breakpoints>
-            <Breakpoint MinWidth=""0"" MaxWidth=""640"">
-                <Setter Property=""Orientation"" Value=""Vertical"" />
-                <Setter Property=""Spacing"" Value=""12"" />
-            </Breakpoint>
-            <Breakpoint MinWidth=""641"" MaxWidth=""1024"">
-                <Setter Property=""Orientation"" Value=""Horizontal"" />
-                <Setter Property=""Spacing"" Value=""20"" />
-            </Breakpoint>
-            <Breakpoint MinWidth=""1025"">
-                <Setter Property=""Orientation"" Value=""Horizontal"" />
-                <Setter Property=""Spacing"" Value=""32"" />
-            </Breakpoint>
-        </AdaptiveContainer.Breakpoints>
+        return @"<Grid Name=""MainContainer"" ColumnDefinitions=""2*,*"" ColumnSpacing=""20"" RowDefinitions=""Auto"">
+    <Grid.Styles>
+        <!-- Component-level responsive behavior using container queries -->
+        <Style Selector=""@container(max-width: 640px) Grid#MainContainer"">
+            <Setter Property=""ColumnDefinitions"" Value=""*"" />
+            <Setter Property=""RowDefinitions"" Value=""Auto,Auto"" />
+            <Setter Property=""ColumnSpacing"" Value=""0"" />
+        </Style>
+    </Grid.Styles>
 
-        <!-- Primary Panel -->
-        <Panel Classes=""primary-panel"">
-            <Panel.Styles>
-                <Style Selector=""Panel.primary-panel"">
-                    <Setter Property=""Background"" Value=""{StaticResource PrimaryBrush}"" />
-                    <Setter Property=""Padding"" Value=""24"" />
-                    <Setter Property=""MinHeight"" Value=""300"" />
-                </Style>
-            </Panel.Styles>
+    <!-- Primary Panel -->
+    <Border Grid.Column=""0""
+            Background=""{StaticResource PrimaryBrush}""
+            Padding=""24""
+            MinHeight=""300"">
+        <StackPanel Spacing=""16"">
+            <TextBlock Text=""Primary Content"" Classes=""heading2"" />
+            <TextBlock Text=""This panel adapts its layout based on available screen space.""
+                       TextWrapping=""Wrap"" />
+            <Button Content=""Action Button"" Classes=""primary"" />
+        </StackPanel>
+    </Border>
 
-            <StackPanel Spacing=""16"">
-                <TextBlock Text=""Primary Content"" Classes=""heading2"" />
-                <TextBlock Text=""This panel adapts its layout based on available screen space.""
-                           TextWrapping=""Wrap"" />
-                <Button Content=""Action Button"" Classes=""primary"" />
-            </StackPanel>
-        </Panel>
-
-        <!-- Secondary Panel -->
-        <Panel Classes=""secondary-panel"">
-            <Panel.Styles>
-                <Style Selector=""Panel.secondary-panel"">
-                    <Setter Property=""Background"" Value=""{StaticResource SecondaryBrush}"" />
-                    <Setter Property=""Padding"" Value=""20"" />
-                    <Setter Property=""MinHeight"" Value=""200"" />
-                </Style>
-            </Panel.Styles>
-
-            <StackPanel Spacing=""12"">
-                <TextBlock Text=""Secondary Content"" Classes=""heading3"" />
-                <TextBlock Text=""Supporting information and actions.""
-                           TextWrapping=""Wrap"" />
-                <Button Content=""Secondary Action"" Classes=""secondary"" />
-            </StackPanel>
-        </Panel>
-    </AdaptiveContainer>
-</Panel>";
+    <!-- Secondary Panel -->
+    <Border Grid.Column=""1""
+            Background=""{StaticResource SecondaryBrush}""
+            Padding=""20""
+            MinHeight=""200"">
+        <StackPanel Spacing=""12"">
+            <TextBlock Text=""Secondary Content"" Classes=""heading3"" />
+            <TextBlock Text=""Supporting information and actions.""
+                       TextWrapping=""Wrap"" />
+            <Button Content=""Secondary Action"" Classes=""secondary"" />
+        </StackPanel>
+    </Border>
+</Grid>";
     }
 
     static string GenerateResponsiveNavigation(ResponsiveConfiguration config)

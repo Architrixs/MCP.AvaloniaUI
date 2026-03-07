@@ -198,7 +198,7 @@
       "ScrollViewer": {
         "description": "Provides scrolling capabilities for content",
         "xaml_example": "<ScrollViewer><StackPanel><!-- Long content here --></StackPanel></ScrollViewer>",
-        "properties": ["VerticalScrollBarVisibility", "HorizontalScrollBarVisibility", "ZoomMode"],
+        "properties": ["VerticalScrollBarVisibility", "HorizontalScrollBarVisibility"],
         "usage": "Scrolling large content areas"
       },
       "Border": {

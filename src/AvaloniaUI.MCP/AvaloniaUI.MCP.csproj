@@ -7,6 +7,7 @@
   <ItemGroup>
     <!-- MCP SDK -->
     <PackageReference Include="ModelContextProtocol" />
+    <PackageReference Include="ModelContextProtocol.AspNetCore" />
     <PackageReference Include="ModelContextProtocol.Core" />
     
     <!-- HTTP client for web requests -->

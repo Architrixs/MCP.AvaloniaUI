@@ -267,24 +267,24 @@ public static class ErrorHandlingService
         // For this MCP server, we'll use console output
         string timestamp = DateTime.UtcNow.ToString("yyyy-MM-dd HH:mm:ss UTC");
 
-        Console.WriteLine($"[{timestamp}] ERROR in {toolName}:");
-        Console.WriteLine($"  Type: {exception.GetType().Name}");
-        Console.WriteLine($"  Message: {exception.Message}");
+        Console.Error.WriteLine($"[{timestamp}] ERROR in {toolName}:");
+        Console.Error.WriteLine($"  Type: {exception.GetType().Name}");
+        Console.Error.WriteLine($"  Message: {exception.Message}");
 
         if (!string.IsNullOrEmpty(additionalContext))
         {
-            Console.WriteLine($"  Context: {additionalContext}");
+            Console.Error.WriteLine($"  Context: {additionalContext}");
         }
 
         if (exception.InnerException != null)
         {
-            Console.WriteLine($"  Inner Exception: {exception.InnerException.Message}");
+            Console.Error.WriteLine($"  Inner Exception: {exception.InnerException.Message}");
         }
 
         // Only log stack trace for unexpected errors
         if (exception is not (ArgumentException or InvalidOperationException or FormatException))
         {
-            Console.WriteLine($"  Stack Trace: {exception.StackTrace}");
+            Console.Error.WriteLine($"  Stack Trace: {exception.StackTrace}");
         }
     }
 

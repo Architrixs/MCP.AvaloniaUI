@@ -86,18 +86,15 @@ The template includes smooth transitions between the following states:
 ```xml
 <VisualStateGroup x:Name=""CustomStates"">
     <VisualState x:Name=""Loading"">
-        <Storyboard>
-            <DoubleAnimation Storyboard.TargetName=""LoadingIndicator""
-                             Storyboard.TargetProperty=""Opacity""
-                             To=""1"" Duration=""0:0:0.2"" />
-        </Storyboard>
+        <VisualState.Setters>
+            <Setter Target=""LoadingIndicator.Opacity"" Value=""1"" />
+            <Setter Target=""LoadingIndicator.IsVisible"" Value=""True"" />
+        </VisualState.Setters>
     </VisualState>
     <VisualState x:Name=""Success"">
-        <Storyboard>
-            <ColorAnimation Storyboard.TargetName=""Background""
-                            Storyboard.TargetProperty=""Color""
-                            To=""Green"" Duration=""0:0:0.3"" />
-        </Storyboard>
+        <VisualState.Setters>
+            <Setter Target=""PART_Border.BorderBrush"" Value=""Green"" />
+        </VisualState.Setters>
     </VisualState>
 </VisualStateGroup>
 ```
@@ -677,31 +674,28 @@ public partial class {config.Name} : UserControl
 
     static string GenerateVisualState(string stateName, bool animations)
     {
-        string storyboard = animations ? GenerateStateStoryboard(stateName) : "";
+        string visualStateContent = animations ? GenerateStateSetters(stateName) : "";
 
         return $@"                <VisualState x:Name=""{stateName}"">
-{storyboard}
+{visualStateContent}
                 </VisualState>";
     }
 
-    static string GenerateStateStoryboard(string stateName)
+    static string GenerateStateSetters(string stateName)
     {
         return stateName.ToLowerInvariant() switch
         {
-            "pointerover" => @"                    <Storyboard>
-                        <DoubleAnimation Storyboard.TargetName=""PART_Border""
-                                         Storyboard.TargetProperty=""Opacity""
-                                         To=""0.8"" Duration=""0:0:0.1"" />
-                    </Storyboard>",
+            "pointerover" => @"                    <VisualState.Setters>
+                        <Setter Target=""PART_Border.Opacity"" Value=""0.9"" />
+                    </VisualState.Setters>",
 
-            "pressed" => @"                    <Storyboard>
-                        <DoubleAnimation Storyboard.TargetName=""PART_Border""
-                                         Storyboard.TargetProperty=""(ScaleTransform.ScaleX)""
-                                         To=""0.95"" Duration=""0:0:0.05"" />
-                        <DoubleAnimation Storyboard.TargetName=""PART_Border""
-                                         Storyboard.TargetProperty=""(ScaleTransform.ScaleY)""
-                                         To=""0.95"" Duration=""0:0:0.05"" />
-                    </Storyboard>",
+            "pressed" => @"                    <VisualState.Setters>
+                        <Setter Target=""PART_Border.RenderTransform"" Value=""scale(0.97)"" />
+                    </VisualState.Setters>",
+
+            "disabled" => @"                    <VisualState.Setters>
+                        <Setter Target=""PART_Border.Opacity"" Value=""0.6"" />
+                    </VisualState.Setters>",
 
             _ => ""
         };

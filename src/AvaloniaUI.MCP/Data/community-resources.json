@@ -104,7 +104,7 @@
         "description": "XAML Behaviors for Avalonia: attach reusable interaction logic without code-behind",
         "nuget": "Avalonia.Xaml.Interactivity",
         "github_url": "https://github.com/AvaloniaUI/Avalonia.Xaml.Behaviors",
-        "usage": "Attach behaviors via <i:Interaction.Behaviors> in XAML; use EventTriggerBehavior, DataTriggerBehavior",
+        "usage": "Install Avalonia.Xaml.Interactivity and declare xmlns:i=\"using:Avalonia.Xaml.Interactivity\"; attach via <i:Interaction.Behaviors> using behaviors like EventTriggerBehavior and DataTriggerBehavior",
         "key_features": ["Event-to-command bindings", "Data triggers", "Custom behavior authoring"]
       },
       "AsyncImageLoader.Avalonia": {

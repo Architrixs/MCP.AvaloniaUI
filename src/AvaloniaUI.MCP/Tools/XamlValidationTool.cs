@@ -190,8 +190,9 @@ public static class XamlValidationTool
 
     static void ValidateAvaloniaSpecificIssues(XDocument doc, List<string> validationResult, string validationLevel, ref bool hasErrors)
     {
-        // Check for unsupported WPF elements
-        string[] wpfOnlyElements = ["UniformGrid", "Viewbox"];
+        // Check for unsupported WPF elements.
+        // Keep this list limited to controls verified as unavailable in Avalonia.
+        string[] wpfOnlyElements = ["StatusBar"];
         foreach (string? element in wpfOnlyElements)
         {
             if (doc.Descendants().Any(e => e.Name.LocalName == element))
@@ -215,7 +216,7 @@ public static class XamlValidationTool
             {
                 if (attr.Value.Contains("RelativeSource={RelativeSource FindAncestor"))
                 {
-                    validationResult.Add("⚠ Warning: FindAncestor RelativeSource may not work as expected in AvaloniaUI");
+                    validationResult.Add("✓ RelativeSource FindAncestor binding detected");
                 }
             }
         }

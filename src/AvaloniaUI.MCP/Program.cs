@@ -19,19 +19,23 @@ sealed class Program
             o.LogToStandardErrorThreshold = LogLevel.Trace;
         });
 
-        // Add Sentry logging with configuration
-        builder.Logging.AddSentry(o =>
+        // Add Sentry logging only when a DSN is configured.
+        string? sentryDsn = Environment.GetEnvironmentVariable("SENTRY_DSN");
+        if (!string.IsNullOrWhiteSpace(sentryDsn))
         {
-            o.Dsn = "https://82c12a7f9520219b0fe9f91ac1d14b37@o4509369388761088.ingest.us.sentry.io/4509576978235392";
-            o.Environment = Environment.GetEnvironmentVariable("ENVIRONMENT") ?? "development";
-            o.TracesSampleRate = 0.1; // 10% of transactions for performance monitoring
-            o.ProfilesSampleRate = 0.1; // 10% for profiling
-            o.AutoSessionTracking = true;
-            o.AttachStacktrace = true;
-            o.SendDefaultPii = false; // Don't send personally identifiable information
-            o.MaxBreadcrumbs = 100;
-            o.Release = "avalonia-mcp@1.0.0";
-        });
+            builder.Logging.AddSentry(o =>
+            {
+                o.Dsn = sentryDsn;
+                o.Environment = Environment.GetEnvironmentVariable("ENVIRONMENT") ?? "development";
+                o.TracesSampleRate = 0.1; // 10% of transactions for performance monitoring
+                o.ProfilesSampleRate = 0.1; // 10% for profiling
+                o.AutoSessionTracking = true;
+                o.AttachStacktrace = true;
+                o.SendDefaultPii = false; // Don't send personally identifiable information
+                o.MaxBreadcrumbs = 100;
+                o.Release = "avalonia-mcp@1.0.0";
+            });
+        }
 
         // Set log levels based on environment
         LogLevel logLevel = Environment.GetEnvironmentVariable("AVALONIA_MCP_LOG_LEVEL") switch

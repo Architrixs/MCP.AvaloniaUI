@@ -32,12 +32,23 @@ public static class ProjectGeneratorTool
                 return ErrorHandlingService.CreateValidationError("CreateAvaloniaProject", validation);
             }
 
+            string templateLower = template.ToLowerInvariant();
+            string platformsLower = platforms.ToLowerInvariant();
+
             // Additional platform validation
             string[] validPlatforms = ToolOperation;
-            if (!validPlatforms.Contains(platforms.ToLowerInvariant()))
+            if (!validPlatforms.Contains(platformsLower))
             {
                 var platformValidation = ValidationResult.Failure($"Invalid platforms '{platforms}'. Valid platforms are: {string.Join(", ", validPlatforms)}");
                 return ErrorHandlingService.CreateValidationError("CreateAvaloniaProject", platformValidation);
+            }
+
+            // Guardrail: mobile/all templates are not yet generated with valid platform-specific entrypoints.
+            if (platformsLower is "mobile" or "all")
+            {
+                var unsupportedValidation = ValidationResult.Failure(
+                    "Platform options 'mobile' and 'all' are temporarily unavailable in the generator. Use platforms='desktop' for now.");
+                return ErrorHandlingService.CreateValidationError("CreateAvaloniaProject", unsupportedValidation);
             }
 
             // Use current directory if not specified
@@ -55,7 +66,7 @@ public static class ProjectGeneratorTool
             Directory.CreateDirectory(projectPath);
 
             // Generate project files based on template
-            string result = template.ToLowerInvariant() switch
+            string result = templateLower switch
             {
                 "mvvm" => GenerateMvvmProject(projectPath, projectName, platforms),
                 "basic" => GenerateBasicProject(projectPath, projectName, platforms),
@@ -77,7 +88,7 @@ public static class ProjectGeneratorTool
             (Path.Combine(projectPath, "App.axaml.cs"), GenerateAppCode(projectName)),
             (Path.Combine(projectPath, "MainWindow.axaml"), GenerateMainWindowXaml(projectName)),
             (Path.Combine(projectPath, "MainWindow.axaml.cs"), GenerateMainWindowCode(projectName)),
-            (Path.Combine(projectPath, "Program.cs"), GenerateProgramCs(projectName))
+            (Path.Combine(projectPath, "Program.cs"), GenerateProgramCs(projectName, projectName))
         };
 
         // Create ViewModels directory
@@ -131,7 +142,7 @@ public static class ProjectGeneratorTool
         File.WriteAllText(Path.Combine(projectPath, "MainWindow.axaml.cs"), mainWindowCode);
 
         // Create Program.cs
-        string programCs = GenerateProgramCs(projectName);
+        string programCs = GenerateProgramCs(projectName, projectName);
         File.WriteAllText(Path.Combine(projectPath, "Program.cs"), programCs);
 
         return $"Successfully created basic AvaloniaUI project '{projectName}' at '{projectPath}'\\n" +
@@ -182,7 +193,7 @@ public static class ProjectGeneratorTool
         File.WriteAllText(Path.Combine(viewModelsDir, "ViewModelBase.cs"), viewModelBase);
 
         // Create platform-specific entry points
-        string desktopProgramCs = GenerateProgramCs($"{projectName}.Desktop");
+        string desktopProgramCs = GenerateProgramCs($"{projectName}.Desktop", projectName);
         File.WriteAllText(Path.Combine(projectPath, "Program.Desktop.cs"), desktopProgramCs);
 
         return $"Successfully created cross-platform AvaloniaUI project '{projectName}' at '{projectPath}'\\n" +
@@ -195,17 +206,13 @@ public static class ProjectGeneratorTool
 
     static string GenerateProjectFile(string projectName, string platforms, bool includeMvvm)
     {
-        string targetFramework = platforms switch
-        {
-            "mobile" => "net10.0",
-            "all" => "net10.0",
-            _ => "net10.0"
-        };
+        const string targetFramework = "net10.0";
 
         var packageReferences = new List<string>
         {
             $"    <PackageReference Include=\"Avalonia\" Version=\"{McpSettings.AvaloniaVersion}\" />",
             $"    <PackageReference Include=\"Avalonia.Desktop\" Version=\"{McpSettings.AvaloniaVersion}\" />",
+            $"    <PackageReference Include=\"Avalonia.Themes.Fluent\" Version=\"{McpSettings.AvaloniaVersion}\" />",
             $"    <PackageReference Include=\"Avalonia.Fonts.Inter\" Version=\"{McpSettings.AvaloniaVersion}\" />"
         };
 
@@ -223,21 +230,24 @@ public static class ProjectGeneratorTool
         return $@"<Project Sdk=""Microsoft.NET.Sdk"">
 
   <PropertyGroup>
-    <OutputType>WinExe</OutputType>
+        <OutputType>Exe</OutputType>
     <TargetFramework>{targetFramework}</TargetFramework>
+        <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
-    <BuiltInComInteropSupport>true</BuiltInComInteropSupport>
-    <ApplicationManifest>app.manifest</ApplicationManifest>
+        <EnableDefaultAvaloniaItems>false</EnableDefaultAvaloniaItems>
     <AvaloniaUseCompiledBindingsByDefault>true</AvaloniaUseCompiledBindingsByDefault>
   </PropertyGroup>
 
   <ItemGroup>
-{string.Join("\\n", packageReferences)}
+{string.Join(Environment.NewLine, packageReferences)}
   </ItemGroup>
 
-  <ItemGroup>
-    <AvaloniaResource Include=""**/*.axaml"" />
-  </ItemGroup>
+    <ItemGroup>
+        <AvaloniaXaml Remove=""**/*.axaml"" />
+        <AvaloniaXaml Include=""**/*.axaml"" Exclude=""bin/**;obj/**"" />
+        <AvaloniaResource Remove=""Assets/**"" />
+        <AvaloniaResource Include=""Assets/**"" Exclude=""bin/**;obj/**"" />
+    </ItemGroup>
 
 </Project>";
     }
@@ -287,7 +297,6 @@ public partial class App : Application
         xmlns:vm=""using:{projectName}.ViewModels""
         x:Class=""{projectName}.MainWindow""
         x:DataType=""vm:MainWindowViewModel""
-        Icon=""/Assets/avalonia-logo.ico""
         Title=""{projectName}""
         Width=""800""
         Height=""600"">
@@ -406,12 +415,12 @@ public class ViewModelBase : ReactiveObject
 }}";
     }
 
-    static string GenerateProgramCs(string projectName)
+    static string GenerateProgramCs(string programNamespace, string appNamespace)
     {
         return $@"using Avalonia;
 using System;
 
-namespace {projectName};
+namespace {programNamespace};
 
 class Program
 {{
@@ -424,7 +433,7 @@ class Program
 
     // Avalonia configuration, don't remove; also used by visual designer.
     public static AppBuilder BuildAvaloniaApp()
-        => AppBuilder.Configure<App>()
+        => AppBuilder.Configure<global::{appNamespace}.App>()
             .UsePlatformDetect()
             .WithInterFont()
             .LogToTrace();

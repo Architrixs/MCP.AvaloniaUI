@@ -9,7 +9,7 @@ namespace AvaloniaUI.MCP.Tools;
 [McpServerToolType]
 public static class AnimationTool
 {
-    [McpServerTool, Description("Generates sophisticated AvaloniaUI animations including storyboards, transitions, and custom effects")]
+    [McpServerTool, Description("Generates sophisticated AvaloniaUI animations including keyframe animations, transitions, and custom effects")]
     public static string GenerateAnimation(
         [Description("Animation type: 'fadeIn', 'slideIn', 'scaleIn', 'rotate', 'bounce', 'elastic', 'custom'")] string animationType,
         [Description("Target element name or type")] string targetElement,
@@ -60,12 +60,16 @@ public static class AnimationTool
 
 ## Advanced Animation Patterns
 
-### Storyboard Composition
+### Keyframe Composition
 ```xml
-<Storyboard>
-    <DoubleAnimation Property=""Opacity"" From=""0"" To=""1"" Duration=""0:0:0.3"" />
-    <DoubleAnimation Property=""(TranslateTransform.X)"" From=""50"" To=""0"" Duration=""0:0:0.4"" />
-</Storyboard>
+<Animation Duration=""0:0:0.4"" FillMode=""Forward"">
+    <KeyFrame Cue=""0%"">
+        <Setter Property=""Opacity"" Value=""0"" />
+    </KeyFrame>
+    <KeyFrame Cue=""100%"">
+        <Setter Property=""Opacity"" Value=""1"" />
+    </KeyFrame>
+</Animation>
 ```
 
 ### Page Transitions
@@ -163,11 +167,11 @@ public class ViewLocator : IDataTemplate
         }
     }
 
-    [McpServerTool, Description("Creates sophisticated storyboard animations with multiple properties and timing")]
+    [McpServerTool, Description("Creates sophisticated keyframe animation sequences with multiple properties and timing")]
     public static string GenerateStoryboard(
         [Description("Animation sequence description (e.g., 'fade in button, then slide in panel')")] string sequence,
         [Description("Overall duration in milliseconds")] int totalDuration = 1000,
-        [Description("Storyboard name")] string storyboardName = "MainStoryboard")
+        [Description("Animation resource name")] string storyboardName = "MainAnimation")
     {
         try
         {
@@ -175,22 +179,22 @@ public class ViewLocator : IDataTemplate
             string triggers = GenerateStoryboardTriggers(storyboardName);
             string codeControl = GenerateStoryboardCodeControl(storyboardName);
 
-            return $@"# Complex Storyboard Animation: {storyboardName}
+            return $@"# Complex Keyframe Animation: {storyboardName}
 
 ## Animation Sequence
 {sequence}
 
-## Storyboard Definition
+## Animation Definition
 ```xml
 <Window.Resources>
-    <Storyboard x:Key=""{storyboardName}"">
+    <Animation x:Key=""{storyboardName}"" Duration=""0:0:{totalDuration / 1000.0:F1}"" FillMode=""Forward"">
 {storyboard}
-    </Storyboard>
+    </Animation>
 </Window.Resources>
 ```
 
-## Event Triggers
-```xml
+## Triggering Pattern
+```csharp
 {triggers}
 ```
 
@@ -199,50 +203,50 @@ public class ViewLocator : IDataTemplate
 {codeControl}
 ```
 
-## Advanced Storyboard Techniques
+## Advanced Keyframe Techniques
 
 ### Sequential Animations
 ```xml
-<Storyboard>
-    <!-- First animation -->
-    <DoubleAnimation Storyboard.TargetName=""Element1""
-                     Storyboard.TargetProperty=""Opacity""
-                     From=""0"" To=""1""
-                     Duration=""0:0:0.3""
-                     BeginTime=""0:0:0"" />
-
-    <!-- Second animation starts after first -->
-    <DoubleAnimation Storyboard.TargetName=""Element2""
-                     Storyboard.TargetProperty=""Opacity""
-                     From=""0"" To=""1""
-                     Duration=""0:0:0.3""
-                     BeginTime=""0:0:0.3"" />
-</Storyboard>
+<Animation Duration=""0:0:0.6"" FillMode=""Forward"">
+    <KeyFrame Cue=""0%"">
+        <Setter Property=""Opacity"" Value=""0"" />
+    </KeyFrame>
+    <KeyFrame Cue=""50%"">
+        <Setter Property=""Opacity"" Value=""0.5"" />
+    </KeyFrame>
+    <KeyFrame Cue=""100%"">
+        <Setter Property=""Opacity"" Value=""1"" />
+    </KeyFrame>
+</Animation>
 ```
 
 ### Parallel Animations
 ```xml
-<Storyboard>
-    <!-- Multiple properties animated simultaneously -->
-    <DoubleAnimation Storyboard.TargetName=""MyButton""
-                     Storyboard.TargetProperty=""Opacity""
-                     From=""0"" To=""1""
-                     Duration=""0:0:0.5"" />
-    <DoubleAnimation Storyboard.TargetName=""MyButton""
-                     Storyboard.TargetProperty=""(TranslateTransform.Y)""
-                     From=""20"" To=""0""
-                     Duration=""0:0:0.5"" />
-</Storyboard>
+<Animation Duration=""0:0:0.5"" FillMode=""Forward"">
+    <KeyFrame Cue=""0%"">
+        <Setter Property=""Opacity"" Value=""0"" />
+        <Setter Property=""RenderTransform"" Value=""translate(0, 20)"" />
+    </KeyFrame>
+    <KeyFrame Cue=""100%"">
+        <Setter Property=""Opacity"" Value=""1"" />
+        <Setter Property=""RenderTransform"" Value=""translate(0, 0)"" />
+    </KeyFrame>
+</Animation>
 ```
 
 ### Keyframe Animations
 ```xml
-<DoubleAnimationUsingKeyFrames Storyboard.TargetName=""MyElement""
-                               Storyboard.TargetProperty=""Opacity"">
-    <LinearDoubleKeyFrame KeyTime=""0:0:0"" Value=""0"" />
-    <LinearDoubleKeyFrame KeyTime=""0:0:0.2"" Value=""0.5"" />
-    <LinearDoubleKeyFrame KeyTime=""0:0:0.5"" Value=""1"" />
-</DoubleAnimationUsingKeyFrames>
+<Animation Duration=""0:0:0.5"" FillMode=""Forward"">
+    <KeyFrame Cue=""0%"">
+        <Setter Property=""Opacity"" Value=""0"" />
+    </KeyFrame>
+    <KeyFrame Cue=""40%"">
+        <Setter Property=""Opacity"" Value=""0.5"" />
+    </KeyFrame>
+    <KeyFrame Cue=""100%"">
+        <Setter Property=""Opacity"" Value=""1"" />
+    </KeyFrame>
+</Animation>
 ```
 
 ## Performance Optimization
@@ -790,70 +794,72 @@ public MainViewModel()
 
     static string GenerateStoryboardXaml(string sequence, int totalDuration, string storyboardName)
     {
-        // Parse sequence and generate appropriate animations
-        return @"        <!-- Fade in first element -->
-        <DoubleAnimation Storyboard.TargetName=""Element1""
-                         Storyboard.TargetProperty=""Opacity""
-                         From=""0"" To=""1""
-                         Duration=""0:0:0.3""
-                         BeginTime=""0:0:0"" />
+        _ = sequence;
+        _ = totalDuration;
+        _ = storyboardName;
 
-        <!-- Slide in second element -->
-        <DoubleAnimation Storyboard.TargetName=""Element2""
-                         Storyboard.TargetProperty=""(TranslateTransform.X)""
-                         From=""50"" To=""0""
-                         Duration=""0:0:0.4""
-                         BeginTime=""0:0:0.2"" />
-
-        <!-- Scale final element -->
-        <DoubleAnimation Storyboard.TargetName=""Element3""
-                         Storyboard.TargetProperty=""(ScaleTransform.ScaleX)""
-                         From=""0.8"" To=""1.0""
-                         Duration=""0:0:0.3""
-                         BeginTime=""0:0:0.5"" />";
+        return @"        <KeyFrame Cue=""0%"">
+            <Setter Property=""Opacity"" Value=""0"" />
+            <Setter Property=""RenderTransform"" Value=""translate(0, 16)"" />
+        </KeyFrame>
+        <KeyFrame Cue=""60%"">
+            <Setter Property=""Opacity"" Value=""0.7"" />
+            <Setter Property=""RenderTransform"" Value=""translate(0, 4)"" />
+        </KeyFrame>
+        <KeyFrame Cue=""100%"">
+            <Setter Property=""Opacity"" Value=""1"" />
+            <Setter Property=""RenderTransform"" Value=""translate(0, 0)"" />
+        </KeyFrame>";
     }
 
     static string GenerateStoryboardTriggers(string storyboardName)
     {
-        return $@"<EventTrigger RoutedEvent=""Button.Click"" SourceName=""TriggerButton"">
-    <BeginStoryboard Storyboard=""{{StaticResource {storyboardName}}}"" />
-</EventTrigger>
+        return $@"private async Task Run{storyboardName}Async(Control target)
+{{
+    if (this.FindResource(""{storyboardName}"") is Animation animation)
+    {{
+        await animation.RunAsync(target);
+    }}
+}}
 
-<!-- Auto-trigger on load -->
-<EventTrigger RoutedEvent=""UserControl.Loaded"">
-    <BeginStoryboard Storyboard=""{{StaticResource {storyboardName}}}"" />
-</EventTrigger>";
+private async void OnLoaded(object? sender, RoutedEventArgs e)
+{{
+    await Run{storyboardName}Async(this);
+}}
+
+private async void OnTriggerClick(object? sender, RoutedEventArgs e)
+{{
+    await Run{storyboardName}Async(this);
+}}";
     }
 
     static string GenerateStoryboardCodeControl(string storyboardName)
     {
-        return $@"public class StoryboardController
+        return $@"public sealed class AnimationController
 {{
-    private readonly Storyboard _{storyboardName.ToLowerInvariant()};
+    private readonly Animation? _{storyboardName.ToLowerInvariant()};
+    private CancellationTokenSource? _cts;
 
-    public StoryboardController(UserControl view)
+    public AnimationController(UserControl view)
     {{
-        _{storyboardName.ToLowerInvariant()} = view.FindResource(""{storyboardName}"") as Storyboard;
+        _{storyboardName.ToLowerInvariant()} = view.FindResource(""{storyboardName}"") as Animation;
     }}
 
-    public void Start()
+    public async Task StartAsync(Control target)
     {{
-        _{storyboardName.ToLowerInvariant()}?.Begin();
+        if (_{storyboardName.ToLowerInvariant()} is null)
+        {{
+            return;
+        }}
+
+        _cts?.Cancel();
+        _cts = new CancellationTokenSource();
+        await _{storyboardName.ToLowerInvariant()}.RunAsync(target, _cts.Token);
     }}
 
     public void Stop()
     {{
-        _{storyboardName.ToLowerInvariant()}?.Stop();
-    }}
-
-    public void Pause()
-    {{
-        _{storyboardName.ToLowerInvariant()}?.Pause();
-    }}
-
-    public void Resume()
-    {{
-        _{storyboardName.ToLowerInvariant()}?.Resume();
+        _cts?.Cancel();
     }}
 }}";
     }
@@ -862,30 +868,41 @@ public MainViewModel()
     {
         return $@"<!-- Custom {effectName} Effect -->
 <UserControl.Resources>
-    <Storyboard x:Key=""{effectName}Storyboard"">
+    <Animation x:Key=""{effectName}Animation"" Duration=""0:0:1"" IterationCount=""Infinite"">
 {string.Join("\n", properties.Select(prop => GeneratePropertyAnimation(prop, pattern, complexity)))}
-    </Storyboard>
+    </Animation>
 </UserControl.Resources>";
     }
 
     static string GeneratePropertyAnimation(string property, string pattern, string complexity)
     {
+        _ = complexity;
+
         return pattern switch
         {
-            "wave" => $@"        <DoubleAnimation Storyboard.TargetProperty=""{property}""
-                         From=""0"" To=""1""
-                         Duration=""0:0:1""
-                         RepeatBehavior=""Forever""
-                         AutoReverse=""True"" />",
+            "wave" => $@"        <KeyFrame Cue=""0%"">
+            <Setter Property=""{property}"" Value=""0"" />
+        </KeyFrame>
+        <KeyFrame Cue=""50%"">
+            <Setter Property=""{property}"" Value=""1"" />
+        </KeyFrame>
+        <KeyFrame Cue=""100%"">
+            <Setter Property=""{property}"" Value=""0"" />
+        </KeyFrame>",
 
-            "spiral" => $@"        <DoubleAnimation Storyboard.TargetProperty=""{property}""
-                         From=""0"" To=""360""
-                         Duration=""0:0:2""
-                         RepeatBehavior=""Forever"" />",
+            "spiral" => $@"        <KeyFrame Cue=""0%"">
+            <Setter Property=""{property}"" Value=""0"" />
+        </KeyFrame>
+        <KeyFrame Cue=""100%"">
+            <Setter Property=""{property}"" Value=""360"" />
+        </KeyFrame>",
 
-            _ => $@"        <DoubleAnimation Storyboard.TargetProperty=""{property}""
-                         From=""0"" To=""1""
-                         Duration=""0:0:0.5"" />"
+            _ => $@"        <KeyFrame Cue=""0%"">
+            <Setter Property=""{property}"" Value=""0"" />
+        </KeyFrame>
+        <KeyFrame Cue=""100%"">
+            <Setter Property=""{property}"" Value=""1"" />
+        </KeyFrame>"
         };
     }
 
